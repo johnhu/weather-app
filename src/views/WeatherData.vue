@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <body>
     <h2>
       The weather in
       <span v-if="weatherData"> {{ weatherData.name }}, {{weatherData.sys.country }}</span>
@@ -8,15 +8,21 @@
     <p>
       
     <spinner v-if="showLoading"></spinner>
+    <div class="body">
     <h3>Currently</h3>
-    <div v-if="weatherData">
-      <weather-main v-bind:weatherMain="weatherData"></weather-main>
-      <weather-data v-bind:weatherData="weatherData.main"></weather-data>
+    <div v-if="weatherData" class="main-weather">
+      <div  class="weather-image">
+        <weather-main v-bind:weatherMain="weatherData"></weather-main>
+      </div>
+      <div class="weather-info">
+        <weather-data v-bind:weatherData="weatherData.main"></weather-data>
+      </div>
     </div>
-    <div v-if="weatherData">
+    <div v-if="weatherData" class="forecast">
       <forecast v-bind:foreCast="foreCast"></forecast>
       </div>
-  </div>
+    </div>
+  </body>
 </template>
 
 <script>
@@ -78,6 +84,24 @@ export default {
 </script>
 
 <style scoped>
+body {
+  max-width: 500px;
+  margin: auto;
+}
+.main-weather {
+  margin: auto;
+    padding: 10px;
+    display: flex;
+}
+ .weather-image {
+    width: 50%;
+  }
+
+  .weather-info {
+    text-align: center;
+    width: 50%;
+  }
+
 .errors li {
   color: red;
   border: solid red 1px;

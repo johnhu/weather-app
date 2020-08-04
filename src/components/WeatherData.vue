@@ -1,14 +1,19 @@
 <template>
   <div class="container">
     <div>
-      <dt v-if="weatherData.temp != weatherData.temp_min"></dt>
-      <dd v-if="weatherData.temp != weatherData.temp_min">{{ weatherData.temp }}&deg;F</dd>
-      <dt>Humidity</dt>
-      <dd>{{ weatherData.humidity }}%</dd>
+      <v-tooltip right>
+        <template v-slot:activator="{ on, attrs }">
+          <h2 v-if="weatherData.temp != weatherData.temp_min" v-bind="attrs" v-on="on">{{ weatherData.temp }}&deg;F</h2>
+        </template>
+        <span>
       <dt>High</dt>
       <dd>{{ weatherData.temp_max }}&deg;F</dd>
       <dt>Low</dt>
       <dd>{{ weatherData.temp_min }}&deg;F</dd>
+      </span>
+      </v-tooltip>
+      <dt>Humidity</dt>
+      <dd>{{ weatherData.humidity }}%</dd>
     </div>
   </div>
 </template>
@@ -23,6 +28,9 @@ export default {
     weatherData: Object,
   },
 };
+
+
+
 </script>
 
 <style scoped>

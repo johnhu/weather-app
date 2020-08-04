@@ -73,18 +73,8 @@ if (this.$ls.get(cacheLabel)){
       let daynum = date.getDate();
       let month = date.getMonth();
 
-      let hour = date.getHours();
-      if (hour === 12) {
-        hour = 'Noon';
-      } else if (hour === 0) {
-        hour = 'Midnight';
-      } else if (hour > 12) {
-        hour = hour - 12 + 'PM';
-      } else if (hour < 12) {
-        hour = hour + 'AM';
-      }
       //let year = date.getFullYear();
-      return `${ months[month] } ${ daynum } @ ${ hour }`;
+      return `${ months[month] } ${ daynum }`;
     }
   }
 }

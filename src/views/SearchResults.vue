@@ -3,25 +3,21 @@
     <message-container v-bind:messages="messages"></message-container>
     <city-list :citylist="listItems" class="city-list"></city-list>
     <div id="form">
+      <p>Enter a city</p>
       <input
         v-on:keyup.enter="getCities"
         v-model="$route.params.query"
         placeholder="Seattle"
         id="text-box"
       />
-      <button v-on:click="getCities" id="send-button">Search</button>
+      <!-- <button v-on:click="getCities" id="send-button">Search</button> -->
     </div>
     <!--Iterates through results and displays city search data in a list -->
     <div id="search-results">
       <load-spinner v-if="showLoading"></load-spinner>
       <ul class="cities" v-if="results && results.list.length > 0">
       <li v-for="(city,index) in results.list" :key="index">
-        <h2>{{ city.name }}, {{ city.sys.country }}</h2>
-        <p>
-        <router-link
-            v-bind:to="{ name: 'WeatherData', params: { cityId: city.id } }"
-          >View Current Weather</router-link>
-        </p>
+        <router-link class="result-name" v-bind:to="{ name: 'WeatherData', params: { cityId: city.id } }">{{ city.name }}, {{ city.sys.country }}</router-link>
           <p>
             <button class="save" v-on:click="saveCity(city)">Add to Shortcuts</button>
           </p>
@@ -113,12 +109,19 @@ body {
   border: solid red 1px;
   padding: 5px;
 }
-h1,
-h2 {
+.result-name {
   font-weight: bold;
-  margin: 21px;
-  margin-left: 0;
+  text-decoration: none;
+  font-size: 1.8em;
+  color: rgb(114, 114, 114);
 }
+.result-name:hover {
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.8em;
+  color: rgb(189, 189, 189);
+}
+
 .save {
   background-color: transparent;
   border: 1.5px solid white;
@@ -154,37 +157,36 @@ p {
   display: inline-flex;
   background-color: transparent;
   border: none;
-  border-bottom: 1.5px solid white;
+  border: 1px solid rgb(134, 134, 134);
   padding: 3px;
-  width: 275px;
-  height: 32px;
+  width: 420px;
+  height: 42px;
 }
 
 #text-box:hover {
-  background-color: rgb(59, 63, 66, 0.5);
+  background-color: rgb(227, 236, 240);
 }
-
-#send-button {
+/* #send-button {
   padding: 10px;
   background-color: transparent;
   margin-left: 7px;
   border: 1.5px solid;
   border-color: white;
   color: white;
-}
+} */
 
 ::placeholder {
-  color: rgb(211, 211, 211);
+  color:rgb(134, 134, 134);
   font-size: 1.2em;
 }
 
 input {
-  color: rgb(255, 255, 255);
+  color: rgb(134, 134, 134);
 }
-
+/* 
 #send-button:hover {
   background-color: rgb(59, 63, 66, 0.5);
-}
+} */
 
 .title {
   margin: 2px;

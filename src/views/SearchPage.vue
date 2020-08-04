@@ -1,15 +1,14 @@
 <template>
   <div id="body">
       <div class="content">
-        <h1>weather app</h1>
-        <p>Enter your location</p>
+        <p>Enter a city</p>
         <input
           v-on:keyup.enter="submitQuery"
           v-model="query"
           placeholder="Seattle"
           id="text-box"
         />
-        <button v-on:click="submitQuery" id="send-button">Search</button>
+        <!-- <button v-on:click="submitQuery" id="send-button">Search</button> -->
         <div class="citylist">
         <city-list :citylist="listItems"></city-list>
         </div>
@@ -53,11 +52,6 @@ export default {
 </script>
 
 <style scoped>
-.about {
-  position: absolute;
-  left: 12px;
-  top: 0;
-}
 .content {
   text-align: center;
   position: absolute;
@@ -80,64 +74,60 @@ h1,
 h2 {
   font-weight: bold;
 }
-p {
-  text-align: left;
-  margin-bottom: 7px;
-}
-
+/* 
 #about {
   color: rgb(255, 255, 255);
   margin-top: 0;
   margin-right: 5px;
   display: none;
-}
-
+} */
+/* 
 .about-toggle {
   color: white;
   background-color: transparent;
   width: 50px;
   height: 20px;
-}
-
+} */
+/* 
 .about-toggle:hover {
   color: #cecece;
   cursor: pointer;
-}
+} */
 
 #text-box {
   display: inline-flex;
   background-color: transparent;
   border: none;
-  border-bottom: 1.5px solid white;
+  border: 1px solid rgb(134, 134, 134);
   padding: 3px;
-  width: 270px;
-  height: 32px;
+  width: 420px;
+  height: 42px;
 }
 
 #text-box:hover {
-  background-color: rgb(59, 63, 66, 0.5);
+  background-color: rgb(227, 236, 240);
 }
 
-#send-button {
+/* #send-button {
   padding: 10px;
   background-color: transparent;
   margin-left: 7px;
-  border: 1.5px solid;
-  border-color: white;
-  color: white;
-}
+  border: 1px solid;
+  border-color: rgb(134, 134, 134);
+  color: rgb(134, 134, 134);
+} */
 
 #send-button:hover {
-  background-color: rgb(59, 63, 66, 0.5);
+  background-color: rgb(227, 236, 240);
 }
 
 ::placeholder {
-  color:#cecece;
+  color:rgb(134, 134, 134);
   font-size: 1.2em;
 }
 
 input {
-  color: lightgrey;
+  color: rgb(134, 134, 134);
 }
 
 @media only screen and (max-width: 670px) {
