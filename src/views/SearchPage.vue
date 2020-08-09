@@ -74,25 +74,6 @@ h1,
 h2 {
   font-weight: bold;
 }
-/* 
-#about {
-  color: rgb(255, 255, 255);
-  margin-top: 0;
-  margin-right: 5px;
-  display: none;
-} */
-/* 
-.about-toggle {
-  color: white;
-  background-color: transparent;
-  width: 50px;
-  height: 20px;
-} */
-/* 
-.about-toggle:hover {
-  color: #cecece;
-  cursor: pointer;
-} */
 
 #text-box {
   display: inline-flex;

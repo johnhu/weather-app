@@ -1,83 +1,102 @@
 <template>
   <div>
-    <message-container v-bind:messages="messages"></message-container>
-    <ul v-if="weatherData" class="forecast">
-      <transition-group name="fade" tag="div" appear>
-        <li v-for="forecast in weatherData.list" v-bind:key="forecast.dt">
-          <h3>{{ forecast.dt|formatDate }}</h3>
-          <weather-summary v-bind:weatherData="forecast.weather"></weather-summary>
-          <weather-data v-bind:weatherData="forecast.main"></weather-data>
-        </li>
-      </transition-group>
-    </ul>
+   <template v-if="weatherData">
+      <!--         
+      <transition-group name="fade" tag="div" appear>-->
+      <vueper-slides
+        class="no-shadow"
+        :visible-slides="3"
+        slide-multiple
+        :gap="3"
+        :slide-ratio="1 / 4"
+        :dragging-distance="200"
+        :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
+      >
+        <vueper-slide
+          v-for="(slide, i) in slides"
+          :key="i"
+          :title="slide.title"
+          :content="slide.content"
+        />
+        <h3>{{ forecast.dt|formatDate }}</h3>
+        <weather-data v-bind:weatherData="forecast.main"></weather-data>
+      </vueper-slides>
+      <!-- </transition-group> -->
+    </template>
     <spinner v-if="showLoading"></spinner>
   </div>
 </template>
 
 <script>
-import {API} from '@/common/api';
-import WeatherData from '@/components/WeatherData';
+import { API } from "@/common/api";
+import WeatherData from "@/components/WeatherData";
 // import Spinner from '@/components/Spinner';
 
 export default {
-  name: 'Forecast',
+  name: "Forecast",
   components: {
-    // 'weather-summary': WeatherSummary,
-    'weather-data': WeatherData,
-    // 'message-container': MessageContainer,
+    "weather-data": WeatherData,
     // 'load-spinner': Spinner
   },
-  data () {
-    return {
-      weatherData: null,
-      messages: [],
-      query: '',
-      showLoading: false,
-    }
+  props: {
+    foreCast: Object,
   },
-  created () {
+  created() {
     this.showLoading = true;
 
-      let cacheLabel = 'forecast_' + this.$route.params.cityId;
-      let cacheExpiry = 15 * 60 * 1000; // 15 minutes
+    let cacheLabel = "forecast_" + this.$route.params.cityId;
+    let cacheExpiry = 15 * 60 * 1000; // 15 minutes
 
-if (this.$ls.get(cacheLabel)){
-      console.log('Cached query detected.');
+    if (this.$ls.get(cacheLabel)) {
+      console.log("Cached query detected.");
       this.results = this.$ls.get(cacheLabel);
       this.showLoading = false;
     } else {
-    console.log('No cache detected. Making API request.');
-    API.get('forecast', {
-      params: {
-          id: this.$route.params.cityId
-      }
-    })
-    .then(response => {
-      this.$ls.set(cacheLabel, response.data, cacheExpiry);
-      this.showLoading = false;
-      this.weatherData = response.data;
-    })
-    .catch(error => {
-      this.showLoading = false;
-      this.messages.push({
-        type: 'error',
-        text: error.message
-      });
-    });
+      console.log("No cache detected. Making API request.");
+      API.get("forecast", {
+        params: {
+          id: this.$route.params.cityId,
+        },
+      })
+        .then((response) => {
+          this.$ls.set(cacheLabel, response.data, cacheExpiry);
+          this.showLoading = false;
+          this.weatherData = response.data;
+        })
+        .catch((error) => {
+          this.showLoading = false;
+          this.messages.push({
+            type: "error",
+            text: error.message,
+          });
+        });
     }
   },
   filters: {
-    formatDate: function (timestamp){
+    formatDate: function (timestamp) {
       let date = new Date(timestamp * 1000);
-      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
       let daynum = date.getDate();
       let month = date.getMonth();
 
       //let year = date.getFullYear();
-      return `${ months[month] } ${ daynum }`;
-    }
-  }
-}
+      return `${months[month]} ${daynum}`;
+    },
+  },
+};
 </script>
 
 <style scoped>

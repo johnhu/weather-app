@@ -2,6 +2,7 @@
   <body>
     <message-container v-bind:messages="messages"></message-container>
     <city-list :citylist="listItems" class="city-list"></city-list>
+    <div id="body">
     <div id="form">
       <p>Enter a city</p>
       <input
@@ -23,6 +24,7 @@
           </p>
         </li>
       </ul>
+    </div>
     </div>
   </body>
 </template>
@@ -102,6 +104,19 @@ export default {
 body {
   background-repeat: no-repeat;
   background-position-y: 30px;
+}
+#body {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: 15px;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+#search-results {
 }
 
 .errors li {
@@ -193,7 +208,7 @@ input {
 }
 
 #search-results {
-  width: 75%;
+  
 }
 
 .cities {

@@ -1,35 +1,31 @@
 <template>
   <div class="container">
-    <div>
       <v-tooltip right>
-        <template v-slot:activator="{ on, attrs }">
-          <h2 v-if="weatherData.temp != weatherData.temp_min" v-bind="attrs" v-on="on">{{ weatherData.temp }}&deg;F</h2>
-        </template>
-        <span>
-      <dt>High</dt>
-      <dd>{{ weatherData.temp_max }}&deg;F</dd>
-      <dt>Low</dt>
-      <dd>{{ weatherData.temp_min }}&deg;F</dd>
-      </span>
+        <template v-slot:activator="{ attrs, on }">
+          <h3 class="temp" v-if="weatherData.temp != weatherData.temp_min" v-bind="attrs" v-on="on">{{ weatherData.temp }}&deg;F</h3>
+              </template>
+       
+      <span><dt>High</dt>
+        <dd>{{ weatherData.temp_max }}&deg;F</dd>
+        <dt>Low</dt>
+        <dd>{{ weatherData.temp_min }}&deg;F</dd></span>
+      
       </v-tooltip>
-      <dt>Humidity</dt>
-      <dd>{{ weatherData.humidity }}%</dd>
-    </div>
+      <h4>{{ weatherData.humidity }}% humidity</h4>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "WeatherData",
   data() {
-    return {};
+    return {}; //returns weatherData object when needed
   },
   props: {
     weatherData: Object,
-  },
-};
-
-
+  }
+}
 
 </script>
 
@@ -44,7 +40,7 @@ dt {
   width: 120px;
   text-align: right;
   font-weight: bold;
-  color: blue;
+  color: #ffffff;
 }
 dd {
   margin: 0 0 0 130px;
@@ -53,4 +49,20 @@ dd {
 dt::after {
   content: ":";
 }
+.v-tooltip {
+  display:unset;
+}
+
+.temp {
+  font-size: 2.2em;
+  font-weight: normal;
+}
+h4 {
+  font-weight: normal;
+}
+
+.temp:hover {
+  color: grey;
+}
+
 </style>

@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <h1>weather <br>app</h1>
+    <router-link v-bind:to="{ name: 'SearchPage'}" id="title">weather <br>app</router-link>
     <router-view />
   </div>
 </template>
 
-<script>
-// import HelloWorld from './components/HelloWorld.vue'
+<script>import Vue from 'vue'
+import VTooltip from 'v-tooltip'
 
+Vue.use(VTooltip)
 export default {
-  name: "app"
+  name: "app",
 };
 </script>
 
@@ -22,12 +23,19 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
-h1 {
+#title {
   margin-top: 5px;
+  color:#2c3e50;
+  font-weight: bold;
+  font-size: 2em;
   text-align: left;
+  text-decoration: none;
   position: absolute;
   left: 12px;
   top: 0;
+}
+
+#title:hover {
+  color:rgb(114, 114, 114);
 }
 </style>

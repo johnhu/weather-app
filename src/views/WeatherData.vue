@@ -1,86 +1,81 @@
 <template>
-  <body>
-    <h2>
-      The weather in
-      <span v-if="weatherData"> {{ weatherData.name }}, {{weatherData.sys.country }}</span>
-    </h2>
-    <message-container v-bind:messages="messages"></message-container>
-    <p>
-      
-    <spinner v-if="showLoading"></spinner>
-    <div class="body">
+<body>
+  <h2>
+    The weather in
+    <span v-if="weatherData">{{ weatherData.name }}, {{weatherData.sys.country }}</span>
+  </h2>
+  <message-container v-bind:messages="messages"></message-container>
+  <spinner v-if="showLoading"></spinner>
+  <div class="body">
     <h3>Currently</h3>
     <div v-if="weatherData" class="main-weather">
-      <div  class="weather-image">
+      <div class="weather-image">
         <weather-main v-bind:weatherMain="weatherData"></weather-main>
       </div>
       <div class="weather-info">
-        <weather-data v-bind:weatherData="weatherData.main"></weather-data>
+        <weather-info v-bind:weatherData="weatherData.main"></weather-info>
       </div>
     </div>
-    <div v-if="weatherData" class="forecast">
+    <!-- <div v-if="weatherData" class="forecast">
       <forecast v-bind:foreCast="foreCast"></forecast>
+    </div> -->
       </div>
-    </div>
   </body>
 </template>
 
 <script>
-import {API} from '@/common/api';
-import WeatherData from '@/components/WeatherData';
-import WeatherMain from '@/components/WeatherMain';
-import MessageContainer from '@/components/MessageContainer';
-import Forecast from '@/components/Forecast';
+import { API } from "@/common/api";
+import WeatherMain from "@/components/WeatherMain";
+import WeatherData from "@/components/WeatherData";
+// import Forecast from "@/components/Forecast";
 
 export default {
-  name: 'WeatherData',
+  name: "WeatherData",
   components: {
-    // 'weather-summary': WeatherSummary,
-    'forecast': Forecast,
-    'weather-data': WeatherData,
-    'weather-main': WeatherMain,
-    'message-container': MessageContainer
+  //  "forecast": Forecast,
+    "weather-info": WeatherData,
+    "weather-main": WeatherMain,
   },
-  data () {
+  data() {
     return {
       weatherData: null,
       foreCast: null,
       messages: [],
-      query: '',
-      showLoading: false
-    }
+      query: "",
+      showLoading: false,
+    };
   },
-  created () {
+  created() {
     this.showLoading = true;
-      let cacheLabel = 'currentWeather_' + this.$route.params.cityId;
-      let cacheExpiry = 15 * 60 * 1000; // 15 minutes
+    let cacheLabel = "currentWeather_" + this.$route.params.cityId;
+    let cacheExpiry = 15 * 60 * 1000; // 15 minutes
 
-    if (this.$ls.get(cacheLabel)){
-      console.log('Cached query detected.');
+    if (this.$ls.get(cacheLabel)) {
+      console.log("Cached query detected.");
       this.weatherData = this.$ls.get(cacheLabel);
       this.showLoading = false;
     } else {
-    console.log('No cache detected. Making API request.');
-    API.get('weather', {
-      params: {
-          id: this.$route.params.cityId
-      }
-    })
-    .then(response => {
-      this.$ls.set(cacheLabel, response.data, cacheExpiry);
-      this.showLoading = false;
-      this.weatherData = response.data;
-    })
-    .catch(error => {
-      this.showLoading = false;
-      this.messages.push({
-        type: 'error',
-        text: error.message
-      });
-    });
-  }
-}
-}
+      console.log("No cache detected. Making API request.");
+      API.get("weather", {
+        params: {
+          id: this.$route.params.cityId,
+        },
+      })
+        .then((response) => {
+          this.$ls.set(cacheLabel, response.data, cacheExpiry);
+          this.showLoading = false;
+          this.weatherData = response.data;
+        })
+        .catch((error) => {
+          this.showLoading = false;
+          this.messages.push({
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
+  },
+};
 </script>
 
 <style scoped>
@@ -90,17 +85,17 @@ body {
 }
 .main-weather {
   margin: auto;
-    padding: 10px;
-    display: flex;
+  padding: 10px;
+  display: flex;
 }
- .weather-image {
-    width: 50%;
-  }
+.weather-image {
+  width: 50%;
+}
 
-  .weather-info {
-    text-align: center;
-    width: 50%;
-  }
+.weather-info {
+  text-align: center;
+  width: 50%;
+}
 
 .errors li {
   color: red;

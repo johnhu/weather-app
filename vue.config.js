@@ -1,6 +1,8 @@
 module.exports = {
-    publicPath: '',
-    //build for docs folder to enable gh-pages hosting
-    outputDir: './docs/',
-    assetsDir: 'assets'
+  "publicPath": "",
+  "outputDir": "./docs/",
+  "assetsDir": "assets",
+  "transpileDependencies": [
+    "vuetify"
+  ]
 }
