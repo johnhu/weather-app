@@ -1,28 +1,14 @@
 <template>
   <div>
-   <template v-if="weatherData">
       <!--         
       <transition-group name="fade" tag="div" appear>-->
-      <vueper-slides
-        class="no-shadow"
-        :visible-slides="3"
-        slide-multiple
-        :gap="3"
-        :slide-ratio="1 / 4"
-        :dragging-distance="200"
-        :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
-      >
-        <vueper-slide
-          v-for="(slide, i) in slides"
-          :key="i"
-          :title="slide.title"
-          :content="slide.content"
-        />
-        <h3>{{ forecast.dt|formatDate }}</h3>
-        <weather-data v-bind:weatherData="forecast.main"></weather-data>
-      </vueper-slides>
+      <ul v-if="weatherData" class="forecast">
+        <li v-for="forecast in weatherData.list" v-bind:key="forecast.dt">
+          <h3>{{ forecast.dt|formatDate }}</h3>
+          <weather-data v-bind:weatherData="forecast.main"></weather-data>
+        </li>
+      </ul>
       <!-- </transition-group> -->
-    </template>
     <spinner v-if="showLoading"></spinner>
   </div>
 </template>
@@ -37,6 +23,14 @@ export default {
   components: {
     "weather-data": WeatherData,
     // 'load-spinner': Spinner
+  },
+  data () {
+    return {
+      weatherData: null,
+      messages: [],
+      query: '',
+      showLoading: false,
+    }
   },
   props: {
     foreCast: Object,

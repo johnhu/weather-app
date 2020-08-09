@@ -16,9 +16,9 @@
         <weather-info v-bind:weatherData="weatherData.main"></weather-info>
       </div>
     </div>
-    <!-- <div v-if="weatherData" class="forecast">
+    <div v-if="weatherData" class="forecast">
       <forecast v-bind:foreCast="foreCast"></forecast>
-    </div> -->
+    </div>
       </div>
   </body>
 </template>
@@ -27,12 +27,12 @@
 import { API } from "@/common/api";
 import WeatherMain from "@/components/WeatherMain";
 import WeatherData from "@/components/WeatherData";
-// import Forecast from "@/components/Forecast";
+import Forecast from "@/components/Forecast";
 
 export default {
   name: "WeatherData",
   components: {
-  //  "forecast": Forecast,
+    "forecast": Forecast,
     "weather-info": WeatherData,
     "weather-main": WeatherMain,
   },
