@@ -2,28 +2,29 @@
   <div class="container">
       <v-tooltip right>
         <template v-slot:activator="{ attrs, on }">
-          <h3 class="temp" v-if="weatherData.temp != weatherData.temp_min" v-bind="attrs" v-on="on">{{ weatherData.temp }}&deg;F</h3>
+          <h3 class="temp" v-bind="attrs" v-on="on">{{ currentWeather.current.temp }}&deg;F</h3>
               </template>
        
       <span><dt>High</dt>
-        <dd>{{ weatherData.temp_max }}&deg;F</dd>
+        <!-- <dd>{{ weatherData.temp_max }}&deg;F</dd>
         <dt>Low</dt>
-        <dd>{{ weatherData.temp_min }}&deg;F</dd></span>
+        <dd>{{ weatherData.temp_min }}&deg;F</dd> -->
+        </span>
       
       </v-tooltip>
-      <h4>{{ weatherData.humidity }}% humidity</h4>
+      <h4>{{ currentWeather.current.humidity }}% humidity</h4>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: "WeatherData",
+  name: "CurrentWeather",
   data() {
-    return {}; //returns weatherData object when needed
+    return {}; //returns currentWeather object when needed
   },
   props: {
-    weatherData: Object,
+    currentWeather: Object,
   }
 }
 

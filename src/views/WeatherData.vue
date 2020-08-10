@@ -2,7 +2,7 @@
 <body>
   <h2>
     The weather in
-    <span v-if="weatherData">{{ weatherData.name }}, {{weatherData.sys.country }}</span>
+    <span v-if="weatherData">{{ this.$route.params.cityName }}, {{ this.$route.params.cityCountry }}</span>
   </h2>
   <message-container v-bind:messages="messages"></message-container>
   <spinner v-if="showLoading"></spinner>
@@ -13,27 +13,34 @@
         <weather-main v-bind:weatherMain="weatherData"></weather-main>
       </div>
       <div class="weather-info">
-        <weather-info v-bind:weatherData="weatherData.main"></weather-info>
+        <weather-info v-bind:currentWeather="weatherData"></weather-info>
       </div>
     </div>
     <div v-if="weatherData" class="forecast">
-      <forecast v-bind:foreCast="foreCast"></forecast>
+      <ul class="forecast">
+        <li v-for="forecast in weatherData.daily" v-bind:key="forecast.dt">
+          <h3>{{ forecast.dt|formatDate }}</h3>
+          <img v-bind:src="'http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'" v-bind:alt="forecast.weather[0].main">
+          <h4>{{forecast.weather[0].main}}</h4>
+        </li>
+      </ul>
+      <!-- <forecast v-bind:foreCast="foreCast"></forecast> -->
     </div>
-      </div>
+  </div>
   </body>
 </template>
 
 <script>
-import { API } from "@/common/api";
+import {API} from '@/common/api';
 import WeatherMain from "@/components/WeatherMain";
-import WeatherData from "@/components/WeatherData";
-import Forecast from "@/components/Forecast";
+import CurrentWeather from "@/components/CurrentWeather";
+// import Forecast from "@/components/Forecast";
 
 export default {
   name: "WeatherData",
   components: {
-    "forecast": Forecast,
-    "weather-info": WeatherData,
+    // "forecast": Forecast,
+    "weather-info": CurrentWeather,
     "weather-main": WeatherMain,
   },
   data() {
@@ -56,9 +63,11 @@ export default {
       this.showLoading = false;
     } else {
       console.log("No cache detected. Making API request.");
-      API.get("weather", {
+       API.get('onecall', {
         params: {
-          id: this.$route.params.cityId,
+          lat: this.$route.params.cityLat,
+          lon: this.$route.params.cityLon,
+          appid: 'cadb942492f5c2c67512076c9cd5e63d'
         },
       })
         .then((response) => {
@@ -74,6 +83,30 @@ export default {
           });
         });
     }
+  },
+  filters: {
+    formatDate: function (timestamp) {
+      let date = new Date(timestamp * 1000);
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      let daynum = date.getDate();
+      let month = date.getMonth();
+
+      //let year = date.getFullYear();
+      return `${months[month]} ${daynum}`;
+    },
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div>
       <!--         
       <transition-group name="fade" tag="div" appear>-->
-      <ul v-if="weatherData" class="forecast">
+      <ul class="forecast">
         <li v-for="forecast in weatherData.list" v-bind:key="forecast.dt">
           <h3>{{ forecast.dt|formatDate }}</h3>
           <weather-data v-bind:weatherData="forecast.main"></weather-data>
@@ -15,13 +15,11 @@
 
 <script>
 import { API } from "@/common/api";
-import WeatherData from "@/components/WeatherData";
 // import Spinner from '@/components/Spinner';
 
 export default {
   name: "Forecast",
   components: {
-    "weather-data": WeatherData,
     // 'load-spinner': Spinner
   },
   data () {
@@ -49,7 +47,9 @@ export default {
       console.log("No cache detected. Making API request.");
       API.get("forecast", {
         params: {
-          id: this.$route.params.cityId,
+          lat: this.$route.params.cityLat,
+          lon: this.$route.params.cityLon,
+          appid: 'cadb942492f5c2c67512076c9cd5e63d'
         },
       })
         .then((response) => {
@@ -70,18 +70,18 @@ export default {
     formatDate: function (timestamp) {
       let date = new Date(timestamp * 1000);
       const months = [
-        "January",
-        "February",
-        "March",
-        "April",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
         "May",
         "June",
         "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec",
       ];
       let daynum = date.getDate();
       let month = date.getMonth();

@@ -18,7 +18,13 @@
       <load-spinner v-if="showLoading"></load-spinner>
       <ul class="cities" v-if="results && results.list.length > 0">
       <li v-for="(city,index) in results.list" :key="index">
-        <router-link class="result-name" v-bind:to="{ name: 'WeatherData', params: { cityId: city.id } }">{{ city.name }}, {{ city.sys.country }}</router-link>
+        <router-link class="result-name" v-bind:to="{ name: 'WeatherData', 
+        params: { cityLat: city.coord.lat, 
+        cityLon: city.coord.lon, 
+        cityName: city.name, 
+        cityCountry: city.sys.country } }">
+        {{ city.name }}, {{ city.sys.country }}
+        </router-link>
           <p>
             <button class="save" v-on:click="saveCity(city)">Add to Shortcuts</button>
           </p>
