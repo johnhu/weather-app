@@ -122,8 +122,8 @@ body {
   height: 100%;
 }
 
-#search-results {
-}
+/* #search-results {
+} */
 
 .errors li {
   color: red;
@@ -212,10 +212,10 @@ input {
 .title {
   margin: 2px;
 }
-
+/* 
 #search-results {
   
-}
+} */
 
 .cities {
   list-style-type: none;
