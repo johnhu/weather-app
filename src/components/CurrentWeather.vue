@@ -1,17 +1,18 @@
 <template>
   <div class="container">
-      <!-- <v-tooltip right>
-        <template v-slot:activator="{ attrs, on }"> -->
+      <v-tooltip right>
+        <template v-slot:activator="{ attrs, on }">
           <h3 class="temp" v-bind="attrs" v-on="on">{{ currentWeather.current.temp }}&deg;F</h3>
-              <!-- </template> -->
+              </template>
        
-      <!-- <span><dt>High</dt>
-        <dd>{{ weatherData.temp_max }}&deg;F</dd>
-        <dt>Low</dt>
-        <dd>{{ weatherData.temp_min }}&deg;F</dd> -->
-        <!-- </span> --> 
-<!--       
-      </v-tooltip> -->
+      <span><dt>Feels Like</dt>
+        <dd>{{ currentWeather.current.feels_like }}&deg;F</dd>
+        <dt>Wind</dt>
+        <dd>{{ currentWeather.current.wind_speed }} km/h</dd>
+        <dt>UV Index</dt>
+        <dd>{{ currentWeather.current.uvi }}</dd>
+        </span>       
+      </v-tooltip>
       <h4>{{ currentWeather.current.humidity }}% humidity</h4>
   </div>
 </template>

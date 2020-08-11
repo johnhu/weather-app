@@ -2,7 +2,9 @@
 <body>
   <h2>
     The weather in
-    <span v-if="weatherData">{{ this.$route.params.cityName }}, {{ this.$route.params.cityCountry }}</span>
+    <span
+      v-if="weatherData"
+    >{{ this.$route.params.cityName }}, {{ this.$route.params.cityCountry }}</span>
   </h2>
   <message-container v-bind:messages="messages"></message-container>
   <spinner v-if="showLoading"></spinner>
@@ -17,41 +19,79 @@
       </div>
     </div>
     <div v-if="weatherData" class="forecast">
-      <ul class="forecast">
-        <li v-for="forecast in weatherData.daily" v-bind:key="forecast.dt">
-          <h3>{{ forecast.dt|formatDate }}</h3>
-          <img v-bind:src="'http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'" v-bind:alt="forecast.weather[0].main">
-          <h4>{{forecast.weather[0].main}}</h4>
-        </li>
-      </ul>
+        <vueper-slides
+          class="no-shadow"
+          :visible-slides="3"
+          :slide-ratio="1 / 4"
+          :dragging-distance="70"
+          >
+          <vueper-slide v-for="forecast in weatherData.daily"
+          :key="forecast"
+          >
+            <template v-slot:content>
+            <div>
+              <h3>{{forecast.dt|formatDate}}</h3>
+              <img
+            v-bind:src="'http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'"
+            v-bind:alt="forecast.weather[0].main"
+            />
+            <h4>{{forecast.weather[0].main}}</h4>
+            </div>
+            </template>
+          </vueper-slide>
+        </vueper-slides>
       <!-- <forecast v-bind:foreCast="foreCast"></forecast> -->
     </div>
   </div>
-  </body>
+</body>
 </template>
 
 <script>
-import {API} from '@/common/api';
+import { API } from "@/common/api";
 import WeatherMain from "@/components/WeatherMain";
 import CurrentWeather from "@/components/CurrentWeather";
 // import Forecast from "@/components/Forecast";
+import { VueperSlides, VueperSlide } from "vueperslides";
+import "vueperslides/dist/vueperslides.css";
 
 export default {
   name: "WeatherData",
   components: {
     // "forecast": Forecast,
+    VueperSlides,
+    VueperSlide,
     "weather-info": CurrentWeather,
     "weather-main": WeatherMain,
   },
-  data() {
-    return {
-      weatherData: null,
-      foreCast: null,
-      messages: [],
-      query: "",
-      showLoading: false,
-    };
-  },
+  data: () => ({
+       weatherData: null,
+       foreCast: null,
+      // messages: [],
+       query: "",
+      // showLoading: false,
+      slides: [
+      {
+        title: "Slide #1",
+        content: "stuff",
+      },
+      {
+        title: "Slide #1",
+        content: "stuff",
+      },
+      {
+        title: "Slide #1",
+        content: "stuff",
+      },
+      {
+        title: "Slide #1",
+        content: "stuff",
+      },
+      {
+        title: "Slide #1",
+        content: "stuff",
+      }
+    ],
+  }),
   created() {
     this.showLoading = true;
     let cacheLabel = "currentWeather_" + this.$route.params.cityId;
@@ -63,11 +103,11 @@ export default {
       this.showLoading = false;
     } else {
       console.log("No cache detected. Making API request.");
-       API.get('onecall', {
+      API.get("onecall", {
         params: {
           lat: this.$route.params.cityLat,
           lon: this.$route.params.cityLon,
-          appid: 'cadb942492f5c2c67512076c9cd5e63d'
+          appid: "cadb942492f5c2c67512076c9cd5e63d",
         },
       })
         .then((response) => {
@@ -136,8 +176,22 @@ body {
   padding: 5px;
 }
 h1,
-h2 {
+h3 {
   font-weight: normal;
+}
+
+h2,
+span {
+  font-weight: bold;
+}
+
+h2,
+h3 {
+  font-size: 1.7rem;
+}
+
+span {
+  color: rgb(0, 132, 209);
 }
 
 ul {
@@ -153,5 +207,9 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.v-window.forecast.v-item-group.theme--dark.v-carousel {
+  height: 250px !important;
 }
 </style>
