@@ -1,16 +1,36 @@
 <template>
   <div id="app">
-    <router-link v-bind:to="{ name: 'SearchPage'}" id="title">weather <br>app</router-link>
+    <router-link v-bind:to="{ name: 'SearchPage'}" id="title">
+      weather
+      <br />app
+    </router-link>
     <router-view />
   </div>
 </template>
 
-<script>import Vue from 'vue'
-import VTooltip from 'v-tooltip'
+<script>
+import Vue from "vue";
+import VTooltip from "v-tooltip";
+import modal from "@/components/modal.vue";
 
-Vue.use(VTooltip)
+Vue.use(VTooltip);
+Vue.use(modal);
+
 export default {
   name: "app",
+  data() {
+    return {
+      // isModalVisible: false,
+    };
+  },
+  // methods: {
+  //   showModal() {
+  //     this.isModalVisible = true;
+  //   },
+  //   closeModal() {
+  //     this.isModalVisible = false;
+  //   },
+  // },
 };
 </script>
 
@@ -25,7 +45,7 @@ export default {
 }
 #title {
   margin-top: 5px;
-  color:#2c3e50;
+  color: #2c3e50;
   font-weight: bold;
   font-size: 2em;
   text-align: left;
@@ -36,6 +56,6 @@ export default {
 }
 
 #title:hover {
-  color:rgb(114, 114, 114);
+  color: rgb(114, 114, 114);
 }
 </style>

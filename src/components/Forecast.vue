@@ -5,7 +5,7 @@
       <ul class="forecast">
         <li v-for="forecast in weatherData.list" v-bind:key="forecast.dt">
           <h3>{{ forecast.dt|formatDate }}</h3>
-          <weather-data v-bind:weatherData="forecast.main"></weather-data>
+          <p v-bind:weatherData="forecast.main"></p>
         </li>
       </ul>
       <!-- </transition-group> -->

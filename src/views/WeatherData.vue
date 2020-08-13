@@ -19,28 +19,30 @@
       </div>
     </div>
     <div v-if="weatherData" class="forecast">
-        <vueper-slides
-          class="no-shadow"
-          :visible-slides="3"
-          :slide-ratio="1 / 4"
-          :dragging-distance="70"
-          >
-          <vueper-slide v-for="forecast in weatherData.daily"
-          :key="forecast"
-          >
-            <template v-slot:content>
-            <div>
+      <vueper-slides
+        class="no-shadow"
+        :visible-slides="3"
+        :slide-ratio="1 / 4"
+        :dragging-distance="70"
+      >
+        <vueper-slide v-for="(forecast,i) in weatherData.daily" :key="i">
+          <template v-slot:content>
+            <div class="slide" @click="showModal = true, addToModal(i);">
               <h3>{{forecast.dt|formatDate}}</h3>
               <img
-            v-bind:src="'http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'"
-            v-bind:alt="forecast.weather[0].main"
-            />
-            <h4>{{forecast.weather[0].main}}</h4>
+                v-bind:src="'http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'"
+                v-bind:alt="forecast.weather[0].main"
+              />
+              <h4>{{forecast.weather[0].main}}</h4>
             </div>
-            </template>
-          </vueper-slide>
-        </vueper-slides>
-      <!-- <forecast v-bind:foreCast="foreCast"></forecast> -->
+            
+          </template>
+        </vueper-slide>
+      </vueper-slides>
+      <!-- use the modal component, pass in the prop -->
+      <modal v-if="showModal" @close="showModal = false" :data="modalData">
+      </modal>
+      <forecast v-bind:foreCast="foreCast"></forecast>
     </div>
   </div>
 </body>
@@ -50,47 +52,28 @@
 import { API } from "@/common/api";
 import WeatherMain from "@/components/WeatherMain";
 import CurrentWeather from "@/components/CurrentWeather";
-// import Forecast from "@/components/Forecast";
+import Forecast from "@/components/Forecast";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
+import modal from "@/components/modal.vue";
 
 export default {
   name: "WeatherData",
   components: {
-    // "forecast": Forecast,
+    "forecast": Forecast,
     VueperSlides,
     VueperSlide,
     "weather-info": CurrentWeather,
     "weather-main": WeatherMain,
+    modal,
   },
   data: () => ({
-       weatherData: null,
-       foreCast: null,
-      // messages: [],
-       query: "",
-      // showLoading: false,
-      slides: [
-      {
-        title: "Slide #1",
-        content: "stuff",
-      },
-      {
-        title: "Slide #1",
-        content: "stuff",
-      },
-      {
-        title: "Slide #1",
-        content: "stuff",
-      },
-      {
-        title: "Slide #1",
-        content: "stuff",
-      },
-      {
-        title: "Slide #1",
-        content: "stuff",
-      }
-    ],
+    modalData: null,
+    weatherData: null,
+    // messages: [],
+    showModal: false,
+    query: "",
+    // showLoading: false,
   }),
   created() {
     this.showLoading = true;
@@ -144,8 +127,16 @@ export default {
       let daynum = date.getDate();
       let month = date.getMonth();
 
-      //let year = date.getFullYear();
       return `${months[month]} ${daynum}`;
+    },
+  },
+  methods: {
+    // addToModal() {
+    //   this.$emit('addToModal')
+    // },
+    addToModal (i) {
+      this.modalData = this.weatherData.daily[i];
+      // return i;
     },
   },
 };
@@ -209,7 +200,16 @@ a {
   color: #42b983;
 }
 
-.v-window.forecast.v-item-group.theme--dark.v-carousel {
-  height: 250px !important;
+.vueperslides {
+  z-index: 0;
+}
+
+.vueperslide {
+  padding: 8px;
+}
+
+.vueperslide:hover {
+  background-color: rgb(214, 214, 214);
+  cursor: pointer;
 }
 </style>
