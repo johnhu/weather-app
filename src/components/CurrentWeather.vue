@@ -2,11 +2,11 @@
   <div class="container">
       <v-tooltip right>
         <template v-slot:activator="{ attrs, on }">
-          <h3 class="temp" v-bind="attrs" v-on="on">{{ currentWeather.current.temp }}&deg;F</h3>
+          <h3 class="temp" v-bind="attrs" v-on="on">{{ currentWeather.current.temp|round }}&deg;F</h3>
               </template>
        
       <span><dt>Feels Like</dt>
-        <dd>{{ currentWeather.current.feels_like }}&deg;F</dd>
+        <dd>{{ currentWeather.current.feels_like|round }}&deg;F</dd>
         <dt>Wind</dt>
         <dd>{{ currentWeather.current.wind_speed }} km/h</dd>
         <dt>UV Index</dt>
@@ -27,6 +27,21 @@ export default {
   props: {
     currentWeather: Object,
   },
+  filters: {
+  round: function (value, decimals) {
+      if (!value) {
+        value = 0;
+      }
+
+      if (!decimals) {
+        decimals = 0;
+      }
+
+      value =
+        Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+      return value;
+    }
+}
 }
 
 </script>

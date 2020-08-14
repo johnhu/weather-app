@@ -2,10 +2,7 @@
 <body>
   <h2>
     The weather in
-    <span
-      v-if="weatherData"
-    >{{ this.$route.params.cityName }}, {{ this.$route.params.cityCountry }}</span>
-    <span v-if="currentCity">{{ this.currentCity.name }} {{ this.currentCity.sys.country }}</span>
+    <span v-if="currentCity">{{ this.currentCity.name }}, {{ this.currentCity.sys.country }}</span>
   </h2>
   <message-container v-bind:messages="messages"></message-container>
   <spinner v-if="showLoading"></spinner>
@@ -55,7 +52,7 @@ import "vueperslides/dist/vueperslides.css";
 import modal from "@/components/modal.vue";
 
 export default {
-  name: "WeatherData",
+  name: "CurrentCity",
   components: {
     VueperSlides,
     VueperSlide,
@@ -76,26 +73,17 @@ export default {
     // showLoading: false,
   }),
   created() {
-      API.get("onecall", { //note: onecall is only able to accept lat/lon
-        params: { 
-          lat: this.$route.params.cityLat,
-          lon: this.$route.params.cityLon,
-          appid: "cadb942492f5c2c67512076c9cd5e63d",
-        },
-      })
-        .then((response) => {
-          // this.$ls.set(cacheLabel, response.data, cacheExpiry);
-          this.showLoading = false;
-          this.weatherData = response.data;
-        })
-        .catch((error) => {
-          this.showLoading = false;
-          this.messages.push({
-            type: "error",
-            text: error.message,
-          });
-        })
-    },
+    console.log("setGPSdata-Location");
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        this.userLat = location.coords.latitude;
+        this.userLon = location.coords.longitude;
+        this.fetchByLocation(this.userLat, this.userLon);
+        this.fetchOneCall(this.userLat, this.userLon);
+      });
+    }
+
+    this.showLoading = true;
     // let cacheLabel = "currentWeather_" + this.$route.params.cityId;
     // let cacheExpiry = 15 * 60 * 1000; // 15 minutes
 
@@ -105,7 +93,7 @@ export default {
     //   this.showLoading = false;
     // } else {
     //   console.log("No cache detected. Making API request.");
-  
+  },
   filters: {
     formatDate: function (timestamp) {
       let date = new Date(timestamp * 1000);
@@ -162,9 +150,28 @@ export default {
           this.showLoading = false;
         });
     },
-    // fetchOneCall(lat, lon) {
+     fetchOneCall(lat, lon) {
       
-    // },
+      API.get("onecall", { //note: onecall is only able to accept lat/lon
+        params: { 
+          lat,
+          lon,
+          appid: "cadb942492f5c2c67512076c9cd5e63d",
+        },
+      })
+        .then((response) => {
+          // this.$ls.set(cacheLabel, response.data, cacheExpiry);
+          this.showLoading = false;
+          this.weatherData = response.data;
+        })
+        .catch((error) => {
+          this.showLoading = false;
+          this.messages.push({
+            type: "error",
+            text: error.message,
+          });
+        })
+   },
   },
 };
 </script>

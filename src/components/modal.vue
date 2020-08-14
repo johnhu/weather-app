@@ -10,13 +10,14 @@
 
           <div class="modal-body">
             <div class="modal-temp">
-              <h3>{{avgTemp}}&deg;F</h3><br/>
+              <h3>{{avgTemp|round}}&deg;F</h3>
+              <br />
               <p>(average)</p>
             </div>
             <div class="high-low">
               <table>
-                <tr>High: {{data.temp.max}}</tr>
-                <tr>Low: {{data.temp.min}}</tr>
+                <tr>High: {{data.temp.max|round}}</tr>
+                <tr>Low: {{data.temp.min|round}}</tr>
               </table>
             </div>
           </div>
@@ -25,24 +26,22 @@
             <table>
               <tr>
                 <td>morning</td>
-                <td>
-                  {{ data.temp.morn }}
-                </td>
+                <td>{{ data.temp.morn|round }}</td>
                 <td></td>
               </tr>
               <tr>
                 <td>afternoon</td>
-                <td>{{data.temp.day}}</td>
+                <td>{{data.temp.day|round}}</td>
                 <td></td>
               </tr>
               <tr>
                 <td>evening</td>
-                <td>{{data.temp.eve}}</td>
+                <td>{{data.temp.eve|round}}</td>
                 <td></td>
               </tr>
               <tr>
                 <td>night</td>
-                <td>{{data.temp.night}}</td>
+                <td>{{data.temp.night|round}}</td>
                 <td></td>
               </tr>
             </table>
@@ -62,6 +61,8 @@ export default {
   },
   data() {
     return {
+      modalData: null,
+      averageTmp: null,
       weatherData: null,
       messages: [],
       query: "",
@@ -90,6 +91,19 @@ export default {
       let month = date.getMonth();
 
       return `${months[month]} ${daynum}`;
+    },
+    round: function (value, decimals) {
+      if (!value) {
+        value = 0;
+      }
+
+      if (!decimals) {
+        decimals = 0;
+      }
+
+      value =
+        Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+      return value;
     },
   },
 };

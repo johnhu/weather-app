@@ -1,7 +1,7 @@
 <template>
   <div id="body">
       <div class="content">
-        <p>Enter a city</p>
+        <h2>Enter a city</h2>
         <input
           v-on:keyup.enter="submitQuery"
           v-model="query"
@@ -10,42 +10,48 @@
         />
         <!-- <button v-on:click="submitQuery" id="send-button">Search</button> -->
         <div class="citylist">
-        <city-list :citylist="listItems"></city-list>
+          <button @click="submitQuery">Search</button>
+          <button @click="picker">Random city</button>
+          <button @click="goToCurrent">Current city</button>
         </div>
       </div>
   </div>
 </template>
 
 <script>
-import CityList from "@/components/CityList";
 
 export default {
   name: "SearchPage",
   data() {
     return {
-      query: "",
-      messages: [],
-      listItems: []
+      cityList: ['Toronto', 'Tokyo','Paris','Berlin','Moscow','Cape Town', 'Las Vegas',
+      'London', 'New York', 'Los Angeles', 'Florida', 'Cancun', 'Vienna', 'Phnom Penh', 'Montevideo', 
+      'New Delhi', 'Shanghai', 'Seoul', 'Baltimore', 'Cleveland', 'Rome', 'San Antonio', 'Mumbai', 'Bangkok',
+      'Albuquerque', 'Charlotte', 'Omaha', 'Chicago', 'Barcelona'],
+      query: ''
     };
   },
   components: {
-    // "about": About,
-    "city-list": CityList
+    // "about": About;
   },
-  created(){
-    if (this.$ls.get("citylist")) {
-      this.listItems = this.$ls.get("citylist");
-    }
+  mounted(){
+    this.picker();
   },
   methods: {
-    /*function changes route while passing search query*/
-    submitQuery: function() {
+    submitQuery: function() { //push search query to results view
       this.$router.push({
         name: "SearchResults",
         params: {
           query: this.query
         }
       });
+    },
+    goToCurrent: function() {
+      this.$router.push("current");
+    },
+    picker: function(){
+      var randomIndex = Math.floor(Math.random() * this.cityList.length);
+      this.query = this.cityList[randomIndex];
     }
   }
 };
@@ -60,7 +66,7 @@ export default {
   top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
+  width: 30%;
   height: 100%;
   z-index: -1;
 }
@@ -73,6 +79,7 @@ export default {
 h1,
 h2 {
   font-weight: bold;
+  text-align: left;
 }
 
 #text-box {
@@ -81,12 +88,23 @@ h2 {
   border: none;
   border: 1px solid rgb(134, 134, 134);
   padding: 3px;
-  width: 420px;
+  width: 100%;
   height: 42px;
 }
 
 #text-box:hover {
   background-color: rgb(227, 236, 240);
+}
+
+.current-city {
+  text-decoration: none;
+  color: unset;
+}
+
+button {
+  border: 1px solid rgb(134, 134, 134);
+  margin: 8px;
+  padding: 5px;
 }
 
 /* #send-button {
@@ -112,6 +130,9 @@ input {
 }
 
 @media only screen and (max-width: 670px) {
+  .content{
+    width: 80%;
+  }
   #send-button {
     padding-left: 20px;
     padding-right: 20px;

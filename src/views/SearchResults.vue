@@ -1,96 +1,71 @@
 <template>
-  <body>
-    <message-container v-bind:messages="messages"></message-container>
-    <city-list :citylist="listItems" class="city-list"></city-list>
     <div id="body">
-    <div id="form">
-      <p>Enter a city</p>
-      <input
-        v-on:keyup.enter="getCities"
-        v-model="$route.params.query"
-        placeholder="Seattle"
-        id="text-box"
-      />
-      <!-- <button v-on:click="getCities" id="send-button">Search</button> -->
+    <div class="content"><div id="form">
+    <p>Enter a city</p>
+    <input
+    v-on:keyup.enter="getCities"
+    v-model="$route.params.query"
+    placeholder="Seattle"
+    id="text-box"
+    />
+    <!-- <button v-on:click="getCities" id="send-button">Search</button> -->
     </div>
     <!--Iterates through results and displays city search data in a list -->
     <div id="search-results">
-      <load-spinner v-if="showLoading"></load-spinner>
-      <ul class="cities" v-if="results && results.list.length > 0">
-      <li v-for="(city,index) in results.list" :key="index">
-        <router-link class="result-name" v-bind:to="{ name: 'WeatherData', 
-        params: { cityLat: city.coord.lat, 
-        cityLon: city.coord.lon, 
-        cityName: city.name, 
-        cityCountry: city.sys.country } }">
-        {{ city.name }}, {{ city.sys.country }}
-        </router-link>
-          <p>
-            <button class="save" v-on:click="saveCity(city)">Add to Shortcuts</button>
-          </p>
-        </li>
-      </ul>
+    <load-spinner v-if="showLoading"></load-spinner>
+    <ul class="cities" v-if="results && results.list.length > 0"> 
+    <li v-for="(city,index) in results.list" :key="index">
+    <router-link class="result-name" v-bind:to="{ name: 'WeatherData',
+    params: { cityLat: city.coord.lat,
+    cityLon: city.coord.lon,
+    cityName: city.name,
+    cityCountry: city.sys.country } }">
+    {{ city.name }}, {{ city.sys.country }}
+    </router-link>
+    </li>
+    </ul>
+    <ul class="error" v-else> <li>{{this.message}}</li> </ul>
+    </div></div>
     </div>
-    </div>
-  </body>
 </template>
 
 <script>
 // import Spinner from "@/components/Spinner";
 import {API} from '@/common/api';
 // import MessageContainer from "@/components/MessageContainer";
-import CityList from "@/components/CityList";
 
 export default {
   name: "SearchResults",
   components: {
     // "spinner": Spinner,
     // "message-container": MessageContainer,
-    "city-list": CityList
   },
   data() {
     return {
       results: null,
       query: "",
       showLoading: false,
-      messages: [],
-      listItems: []
+      message: null
     };
   },
-  created() {
+  created(){
     this.getCities();
-    if (this.$ls.get("saved")) {
-      this.listItems = this.$ls.get("city-list");
-    }
   },
   methods: {
     /*city is passed into listItems array*/
-    saveCity: function(city) {
-      this.listItems.push(city);
-      this.$ls.set("city-list", this.listItems);
-    },
     getCities: function() {
       this.results = null;
       this.showLoading = true;
-      let cacheLabel = "citySearch_" + this.$route.params.query;
-      let cacheExpiry = 15 * 60 * 1000; // 15 minutes
-      if (this.$ls.get(cacheLabel)) {
-        console.log("Cached query detected.");
-        this.results = this.$ls.get(cacheLabel);
-        this.showLoading = false;
-      } else {
-        console.log("No cache available. Making API request.");
 
-        
       API.get('find', {
         params: {
-            q: this.$route.params.query
+            q: this.$route.params.query,
+            appid: "cadb942492f5c2c67512076c9cd5e63d"
         }
       })
       .then(response => {
-      this.$ls.set(cacheLabel, response.data, cacheExpiry);
-      console.log('New query has been cached as: ' + cacheLabel);
       this.results = response.data;
+      this.handleResults();
       this.showLoading = false;
       })
       .catch(error => {
@@ -100,37 +75,46 @@ export default {
         });
         this.showLoading = false;
       });
+      },
+    handleResults: function(){
+      if (this.results.count == 1) {
+        this.showLoading = true;
+        this.$router.push({
+        name: "WeatherData",
+        params: {
+          cityLat: this.results.list[0].coord.lat,
+          cityLon: this.results.list[0].coord.lon,
+          cityName: this.results.list[0].name,
+          cityCountry: this.results.list[0].sys.country } });
+      }
+      else if (this.results.count == 0) {
+        this.message = "No results found. Try another search.";
       }
     }
+    }
   }
-}
+
 </script>
 
 <style scoped>
-body {
-  background-repeat: no-repeat;
-  background-position-y: 30px;
-}
-#body {
+.content {
+  text-align: center;
   position: absolute;
   background-repeat: no-repeat;
   background-position: 15px;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
+  width: 30%;
   height: 100%;
+  z-index: -1;
 }
 
-/* #search-results {
-} */
-
-.errors li {
-  color: red;
-  border: solid red 1px;
-  padding: 5px;
+li {
+  text-align: left;
 }
-.result-name {
+
+.result-name, .error {
   font-weight: bold;
   text-decoration: none;
   font-size: 1.8em;
@@ -180,7 +164,7 @@ p {
   border: none;
   border: 1px solid rgb(134, 134, 134);
   padding: 3px;
-  width: 420px;
+  width: 100%;
   height: 42px;
 }
 
@@ -217,20 +201,9 @@ input {
   
 } */
 
-.cities {
+.cities, .error {
   list-style-type: none;
   padding: 0;
-}
-.search-result {
-  display: inline-block;
-  text-align: center;
-  vertical-align: top;
-  width: 235px;
-  min-height: 300px;
-  border: none;
-  padding: 5px;
-  margin: 5px;
-  box-shadow: 0px 0px 3px rgb(131, 131, 131);
 }
 
 a {
@@ -248,6 +221,9 @@ a {
 }
 
 @media only screen and (max-width: 580px) {
+  .content {
+    width: 70%;
+  }
   .shortcuts {
     width: 50%;
     position: unset;
