@@ -1,27 +1,51 @@
 <template>
   <transition name="modal">
-    <div class="modal-backdrop">
-      <div class="modal-wrapper">
+    <div class="modal-backdrop" @click="$emit('close')">
+      <div class="modal-wrapper" @click.stop>
         <div class="modal-container">
           <div class="modal-header">
             <h3>{{data.dt|formatDate}}</h3>
+            <button class="modal-default-button" @click="$emit('close')">X</button>
           </div>
 
           <div class="modal-body">
-            <div class="temp">
-              <h3>79 F</h3>
+            <div class="modal-temp">
+              <h3>{{avgTemp}}&deg;F</h3><br/>
+              <p>(average)</p>
             </div>
             <div class="high-low">
-              <dt>High: </dt>
-              <dd>55 F </dd>
-              <br/>
-              <dt>Low: </dt>
-              <dd>51 F </dd>
-              </div>
+              <table>
+                <tr>High: {{data.temp.max}}</tr>
+                <tr>Low: {{data.temp.min}}</tr>
+              </table>
+            </div>
           </div>
 
           <div class="modal-footer">
-            <button class="modal-default-button" @click="$emit('close')">X</button>
+            <table>
+              <tr>
+                <td>morning</td>
+                <td>
+                  {{ data.temp.morn }}
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>afternoon</td>
+                <td>{{data.temp.day}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>evening</td>
+                <td>{{data.temp.eve}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>night</td>
+                <td>{{data.temp.night}}</td>
+                <td></td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
@@ -44,7 +68,7 @@ export default {
       showLoading: false,
     };
   },
-  props: ["data"],
+  props: ["data", "avgTemp"],
   filters: {
     formatDate: function (timestamp) {
       let date = new Date(timestamp * 1000);
@@ -88,13 +112,17 @@ export default {
   width: 300px;
   box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
-  display: flex;
+  display: table;
   /* flex-direction: column; */
-  z-index: 2;
+  z-index: 9;
+  transition: opacity 0.3s ease;
 }
 
 .modal-container {
   width: 300px;
+  display: table-cell;
+  vertical-align: middle;
+  transition: all 0.3s ease;
 }
 
 .modal-header,
@@ -111,7 +139,13 @@ export default {
 
 .modal-footer {
   border-top: 1px solid #eeeeee;
-  justify-content: flex-end;
+  width: 300px;
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+table {
+  table-layout: fixed;
 }
 
 .modal-body {
@@ -120,12 +154,9 @@ export default {
   padding: 20px 10px;
 }
 
-.temp,
+.modal-temp,
 .high-low {
   width: 50%;
-}
-dd, dt {
-  display: inline-flex;
 }
 
 .btn-close {
@@ -143,5 +174,28 @@ dd, dt {
   background: #4aae9b;
   border: 1px solid #4aae9b;
   border-radius: 2px;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

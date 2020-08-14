@@ -40,9 +40,8 @@
         </vueper-slide>
       </vueper-slides>
       <!-- use the modal component, pass in the prop -->
-      <modal v-if="showModal" @close="showModal = false" :data="modalData">
+      <modal v-if="showModal" @close="showModal = false" :data="modalData" :avgTemp="avgTemp">
       </modal>
-      <forecast v-bind:foreCast="foreCast"></forecast>
     </div>
   </div>
 </body>
@@ -52,7 +51,6 @@
 import { API } from "@/common/api";
 import WeatherMain from "@/components/WeatherMain";
 import CurrentWeather from "@/components/CurrentWeather";
-import Forecast from "@/components/Forecast";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import modal from "@/components/modal.vue";
@@ -60,7 +58,6 @@ import modal from "@/components/modal.vue";
 export default {
   name: "WeatherData",
   components: {
-    "forecast": Forecast,
     VueperSlides,
     VueperSlide,
     "weather-info": CurrentWeather,
@@ -68,7 +65,10 @@ export default {
     modal,
   },
   data: () => ({
+    currentWeather: null,
     modalData: null,
+    tempValues: null,
+    avgTemp: null,
     weatherData: null,
     // messages: [],
     showModal: false,
@@ -76,6 +76,21 @@ export default {
     // showLoading: false,
   }),
   created() {
+     // first, let's create a sample array
+
+var sampleArray= [50.2334562, 19.126765, 34.0116677];
+
+// now use map on an inline function expression to replace each element
+// we'll convert each element to a string with toFixed()
+// and then back to a number with Number()
+
+sampleArray = sampleArray.map(function(each_element){
+    return Number(each_element.toFixed(2));
+});
+
+// and finally, we will print our new array to the console
+
+console.log(sampleArray);
     this.showLoading = true;
     let cacheLabel = "currentWeather_" + this.$route.params.cityId;
     let cacheExpiry = 15 * 60 * 1000; // 15 minutes
@@ -131,12 +146,19 @@ export default {
     },
   },
   methods: {
-    // addToModal() {
-    //   this.$emit('addToModal')
-    // },
-    addToModal (i) {
+    convertToArray(weatherData){
+      this.currentWeather = Object.values(weatherData.current);
+      
+    },
+     addToModal (i) {
       this.modalData = this.weatherData.daily[i];
-      // return i;
+      this.getAvgTemp(this.modalData);
+    },
+    getAvgTemp(modalData) {
+      this.tempValues = Object.values(modalData.temp);
+      let sum = this.tempValues.reduce((previous, current) => current += previous);
+      let avg = sum / this.tempValues.length;
+      this.avgTemp = avg;
     },
   },
 };
