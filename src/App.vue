@@ -23,14 +23,6 @@ export default {
       // isModalVisible: false,
     };
   },
-  // methods: {
-  //   showModal() {
-  //     this.isModalVisible = true;
-  //   },
-  //   closeModal() {
-  //     this.isModalVisible = false;
-  //   },
-  // },
 };
 </script>
 
@@ -53,6 +45,7 @@ export default {
   position: absolute;
   left: 12px;
   top: 0;
+  z-index: 9998;
 }
 
 #title:hover {

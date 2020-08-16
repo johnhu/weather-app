@@ -124,7 +124,7 @@ export default {
 .modal-wrapper {
   background: #ffffff;
   width: 300px;
-  box-shadow: 2px 2px 20px 1px;
+  box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.3);
   overflow-x: auto;
   display: table;
   /* flex-direction: column; */
@@ -139,6 +139,10 @@ export default {
   transition: all 0.3s ease;
 }
 
+tr, td, p {
+  color: black;
+}
+
 .modal-header,
 .modal-footer {
   padding: 15px;
@@ -147,7 +151,7 @@ export default {
 
 .modal-header {
   border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
+  color: #363636;
   justify-content: space-between;
 }
 
@@ -164,6 +168,7 @@ table {
 
 .avg-temp {
   font-size: 2rem;
+  color: rgb(41, 41, 41);
 }
 
 .modal-body {
@@ -183,15 +188,8 @@ table {
   padding: 20px;
   cursor: pointer;
   font-weight: bold;
-  color: #4aae9b;
+  color: #414141;
   background: transparent;
-}
-
-.btn-green {
-  color: white;
-  background: #4aae9b;
-  border: 1px solid #4aae9b;
-  border-radius: 2px;
 }
 
 /*

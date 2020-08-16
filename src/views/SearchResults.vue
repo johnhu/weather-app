@@ -31,7 +31,7 @@
 
 <script>
 // import Spinner from "@/components/Spinner";
-import {API} from '@/common/api';
+import axios from 'axios';
 // import MessageContainer from "@/components/MessageContainer";
 
 export default {
@@ -42,6 +42,7 @@ export default {
   },
   data() {
     return {
+      openweathermap: '//api.openweathermap.org/data/2.5/',
       results: null,
       query: "",
       showLoading: false,
@@ -57,7 +58,7 @@ export default {
       this.results = null;
       this.showLoading = true;
 
-      API.get('find', {
+      axios.get(this.openweathermap+'find', {
         params: {
             q: this.$route.params.query,
             appid: "cadb942492f5c2c67512076c9cd5e63d"
