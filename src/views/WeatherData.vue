@@ -1,16 +1,15 @@
 <template>
-<body>
-  <h2>
-    The weather in
-    <span
-      v-if="weatherData"
-    >{{ this.$route.params.cityName }}, {{ this.$route.params.cityCountry }}</span>
-    <span v-if="currentCity">{{ this.currentCity.name }} {{ this.currentCity.sys.country }}</span>
-  </h2>
-  <message-container v-bind:messages="messages"></message-container>
+<div id="body">
+  <div><h2 id="weather-title">
+  The weather in
+  <span
+  v-if="weatherData"
+  >{{ this.$route.params.cityName }}, {{ this.$route.params.cityCountry }}</span>
+  <span v-if="currentCity">{{ this.currentCity.name }} {{ this.currentCity.sys.country }}</span>
+  </h2></div>
   <spinner v-if="showLoading"></spinner>
   <div class="body">
-    <h3>Currently</h3>
+    <h3 id="currently">Currently</h3>
     <div v-if="weatherData" class="main-weather">
       <div class="weather-image">
         <weather-main v-bind:weatherMain="weatherData"></weather-main>
@@ -33,6 +32,7 @@
               <img
                 v-bind:src="'http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'"
                 v-bind:alt="forecast.weather[0].main"
+                width="50%"
               />
               <h4>{{forecast.weather[0].main}}</h4>
             </div>
@@ -43,7 +43,7 @@
       <modal v-if="showModal" @close="showModal = false" :data="modalData" :avgTemp="avgTemp"></modal>
     </div>
   </div>
-</body>
+</div>
 </template>
 
 <script>
@@ -96,15 +96,6 @@ export default {
           });
         })
     },
-    // let cacheLabel = "currentWeather_" + this.$route.params.cityId;
-    // let cacheExpiry = 15 * 60 * 1000; // 15 minutes
-
-    // if (this.$ls.get(cacheLabel)) {
-    //   console.log("Cached query detected.");
-    //   this.weatherData = this.$ls.get(cacheLabel);
-    //   this.showLoading = false;
-    // } else {
-    //   console.log("No cache detected. Making API request.");
   
   filters: {
     formatDate: function (timestamp) {
@@ -170,29 +161,32 @@ export default {
 </script>
 
 <style scoped>
-body {
-  max-width: 500px;
+#body{
+  width: 80%;
   margin: auto;
 }
+
+#weather-title {
+  margin-bottom: 20px;
+}
+
 .main-weather {
   margin: auto;
   padding: 10px;
+  padding-bottom: 50px;
   display: flex;
+  align-items: center;
+  width: 50%;
 }
+
 .weather-image {
   width: 50%;
 }
 
 .weather-info {
-  text-align: center;
   width: 50%;
 }
 
-.errors li {
-  color: red;
-  border: solid red 1px;
-  padding: 5px;
-}
 h1,
 h3 {
   font-weight: normal;
@@ -239,4 +233,12 @@ a {
   background-color: rgb(214, 214, 214);
   cursor: pointer;
 }
+
+@media only screen and (max-width: 375px) {
+    #body{
+  position: absolute;
+  top: 20%;
+  left: 10%;
+}
+  }
 </style>

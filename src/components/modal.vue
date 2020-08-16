@@ -10,7 +10,7 @@
 
           <div class="modal-body">
             <div class="modal-temp">
-              <h3>{{avgTemp|round}}&deg;F</h3>
+              <h3 class="avg-temp">{{avgTemp|round}}&deg;F</h3>
               <br />
               <p>(average)</p>
             </div>
@@ -160,6 +160,10 @@ export default {
 
 table {
   table-layout: fixed;
+}
+
+.avg-temp {
+  font-size: 2rem;
 }
 
 .modal-body {

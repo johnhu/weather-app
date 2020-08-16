@@ -25,9 +25,13 @@ export default {
   data() {
     return {
       cityList: ['Toronto', 'Tokyo','Paris','Berlin','Moscow','Cape Town', 'Las Vegas',
-      'London', 'New York', 'Los Angeles', 'Florida', 'Cancun', 'Vienna', 'Phnom Penh', 'Montevideo', 
-      'New Delhi', 'Shanghai', 'Seoul', 'Baltimore', 'Cleveland', 'Rome', 'San Antonio', 'Mumbai', 'Bangkok',
-      'Albuquerque', 'Charlotte', 'Omaha', 'Chicago', 'Barcelona'],
+      'London', 'New York City', 'Los Angeles', 'Florida', 'Cancun', 'Vienna', 'Phnom Penh', 'Montevideo', 
+      'Delhi', 'Shanghai', 'Seoul', 'Baltimore', 'Cleveland', 'Rome', 'San Antonio', 'Mumbai', 'Bangkok',
+      'Albuquerque', 'Charlotte', 'Omaha', 'Chicago', 'Barcelona', 'Melbourne', 'Auckland', 'Sao Paulo', 
+      'Mexico City', 'Cairo', 'Dhaka', 'Beijing', 'Osaka', 'Karachi', 'Buenos Aires', 'Istanbul', 'Kolkata',
+      'Rio De Janeiro', 'Lagos', 'Manila', 'Kinshasa', 'Shenzhen', 'Lahore', 'Bangalore', 'Bogota', 'Jakarta',
+      'Lima', 'Hyderabad', 'Tehran', 'Ho Chi Minh City', 'Luanda', 'Kuala Lumpur', 'Madrid', 'Houston', 'Dallas',
+      'Seattle', 'Vancouver', 'Singapore', 'Atlanta', 'Philadelphia', 'Khartoum', 'Saint Petersburg'],
       query: ''
     };
   },

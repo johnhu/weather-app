@@ -71,7 +71,7 @@ dt::after {
 }
 
 .temp {
-  font-size: 2.2em;
+  font-size: 3.2em;
   font-weight: normal;
 }
 h4 {
