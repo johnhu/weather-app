@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <img
-      v-bind:src="'http://openweathermap.org/img/w/' + weatherMain.current.weather[0].icon + '.png'"
+      v-bind:src="'http://openweathermap.org/img/wn/' + weatherMain.current.weather[0].icon + '.png'"
       v-bind:alt="weatherMain.current.weather[0].main"
       width="30%"
     />

@@ -31,7 +31,8 @@ export default {
       'Mexico City', 'Cairo', 'Dhaka', 'Beijing', 'Osaka', 'Karachi', 'Buenos Aires', 'Istanbul', 'Kolkata',
       'Rio De Janeiro', 'Lagos', 'Manila', 'Kinshasa', 'Shenzhen', 'Lahore', 'Bangalore', 'Bogota', 'Jakarta',
       'Lima', 'Hyderabad', 'Tehran', 'Ho Chi Minh City', 'Luanda', 'Kuala Lumpur', 'Madrid', 'Houston', 'Dallas',
-      'Seattle', 'Vancouver', 'Singapore', 'Atlanta', 'Philadelphia', 'Khartoum', 'Saint Petersburg'],
+      'Seattle', 'Vancouver', 'Singapore', 'Atlanta', 'Philadelphia', 'Khartoum', 'Saint Petersburg','Athens',
+      'Amsterdam', ],
       query: ''
     };
   },

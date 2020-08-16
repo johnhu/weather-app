@@ -34,7 +34,7 @@
     <div class="slide" @click="showModal = true, addToModal(i);">
     <h3>{{forecast.dt|formatDate}}</h3>
     <img
-    v-bind:src="'http://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'"
+    v-bind:src="'http://openweathermap.org/img/wn/' + forecast.weather[0].icon + '.png'"
     v-bind:alt="forecast.weather[0].main"
     width="50%"
     />
@@ -46,6 +46,7 @@
     <!-- use the modal component, pass in the prop -->
     <modal v-if="showModal" @close="showModal = false" :data="modalData" :avgTemp="avgTemp"></modal>
     </div>
+    <h5>Photo courtesy of {{photoData.photographer}} via Pexels</h5>
     </v-container></div>
     </v-parallax>
   </v-main>
@@ -101,9 +102,6 @@ export default {
       .then((response) => {
         this.showLoading = false;
         this.weatherData = response.data;
-        // axios
-        //   .get(this.pexels + this.weatherData.current.weather[0].main + "&per_page=15&page=1")
-        //   .then((response) => (this.photoData = response.data))
       })
       .catch((error) => {
         this.showLoading = false;
@@ -207,7 +205,7 @@ v-main {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(199, 216, 228, 0.7);
+  background-color: rgba(152, 181, 201, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -247,24 +245,13 @@ h2,
 h3 {
   font-size: 1.7rem;
 }
+h5 {
+  float: right;
+}
 
 span {
-  color: rgb(0, 132, 209);
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  width: 300px;
-  min-height: 300px;
-  border: solid 1px #e8e8e8;
-  padding: 10px;
-}
-a {
-  color: #42b983;
+  color: rgb(170, 235, 255);
+  text-shadow: 5px 0px 7px #434969;
 }
 
 .vueperslides {

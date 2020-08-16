@@ -79,7 +79,7 @@ h4 {
 }
 
 .temp:hover {
-  color: grey;
+  color: rgb(224, 224, 224);
 }
 
 </style>
