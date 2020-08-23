@@ -2,13 +2,13 @@
   <div class="container">
       <v-tooltip right>
         <template v-slot:activator="{ attrs, on }">
-          <h3 class="temp" v-bind="attrs" v-on="on">{{ currentWeather.current.temp|round }}&deg;F</h3>
+          <h3 class="temp" v-bind="attrs" v-on="on">{{ currentWeather.current.temp|round }}&deg;</h3>
               </template>
        
       <span><dt>Feels Like</dt>
-        <dd>{{ currentWeather.current.feels_like|round }}&deg;F</dd>
+        <dd>{{ currentWeather.current.feels_like|round }}&deg;</dd>
         <dt>Wind</dt>
-        <dd>{{ currentWeather.current.wind_speed }} km/h</dd>
+        <dd>{{ currentWeather.current.wind_speed }} mph</dd>
         <dt>UV Index</dt>
         <dd>{{ currentWeather.current.uvi }}</dd>
         </span>       
@@ -22,7 +22,8 @@
 export default {
   name: "CurrentWeather",
   data() {
-    return {}; //returns currentWeather object when needed
+    return {
+    }; //returns currentWeather object when needed
   },
   props: {
     currentWeather: Object,
@@ -53,9 +54,7 @@ dl {
 }
 dt {
   float: left;
-  clear: left;
-  width: 120px;
-  text-align: right;
+  text-align: left;
   font-weight: bold;
   color: #ffffff;
 }

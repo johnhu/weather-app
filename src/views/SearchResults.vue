@@ -221,6 +221,10 @@ a {
   color: lightgray;
 }
 
+.units-toggle {
+  display:none;
+}
+
 @media only screen and (max-width: 580px) {
   .content {
     width: 70%;

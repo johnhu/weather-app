@@ -3,15 +3,15 @@
       <div class="content">
         <h2>Enter a city</h2>
         <input
+          @click="query=''"
           v-on:keyup.enter="submitQuery"
           v-model="query"
-          placeholder="Seattle"
           id="text-box"
         />
         <!-- <button v-on:click="submitQuery" id="send-button">Search</button> -->
         <div class="citylist">
           <button @click="submitQuery">Search</button>
-          <button @click="picker">Random city</button>
+          <button @click="picker(); submitQuery();">Random city</button>
           <button @click="goToCurrent">Current city</button>
         </div>
       </div>
