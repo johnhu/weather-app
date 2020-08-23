@@ -4,18 +4,14 @@ import router from './router'
 // import VueLocalStorage from 'vue-ls';
 import vuetify from './plugins/vuetify';
 import 'vuetify/dist/vuetify.css'
-import VueTemperatureFilter from 'vue-temperature-filter';
+import { VueSpinners } from '@saeris/vue-spinners'
 
 // let options = {
 //   namespace: 'weather__'
 // };
 
 // Vue.use(VueLocalStorage, options);
-Vue.use(VueTemperatureFilter); 
-Vue.use(VueTemperatureFilter, {
-  fromFahrenheit: true,
-  showText: true
-});
+Vue.use(VueSpinners)
 
 Vue.config.productionTip = false
 

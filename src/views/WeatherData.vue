@@ -1,7 +1,11 @@
 <template>
   <v-main>
+    <load-spinner v-if="loading">
+    </load-spinner>
     <v-parallax v-if="photo" :src="photo.src.large" :alt="this.currentCity">
+      
       <div class="overlay">
+        
         <v-container>
           <header>
             <h2 id="weather-title">
@@ -9,9 +13,6 @@
               <span
                 v-if="weatherData"
               >{{ currentCity }}</span>
-              <!-- <span
-                v-if="currentCity"
-              >{{ this.currentCity.name }} {{ this.currentCity.sys.country }}</span> -->
             </h2>
           </header>
           <div v-if="weatherData" class="main-weather">
@@ -70,6 +71,7 @@ import CurrentWeather from "@/components/CurrentWeather";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import modal from "@/components/modal.vue";
+import { ClipLoader } from '@saeris/vue-spinners'
 
 export default {
   name: "WeatherData",
@@ -79,6 +81,7 @@ export default {
     "weather-info": CurrentWeather,
     "weather-main": WeatherMain,
     modal,
+    "load-spinner":ClipLoader
   },
   data: () => ({
     openweathermap: "//api.openweathermap.org/data/2.5/",
@@ -96,13 +99,14 @@ export default {
     query: "",
     initiallyFailed: false,
     // isCelsius: this.$parent.isCelsius,
-    // showLoading: false,
+    loading: false,
   }),
   // beforeMount() {
     
   // },
   created() {
     this.getWeather();
+    this.loading = true;
   },
 
   filters: {
@@ -142,6 +146,7 @@ export default {
       this.avgTemp = avg;
     },
     getWeather (){
+      this.loading = true;
       if (this.$parent.isCelsius == false) {
     axios
       .get(this.openweathermap + "onecall", {
@@ -154,13 +159,13 @@ export default {
           },
         })
       .then((response) => {
-        this.showLoading = false;
+        this.loading = false;
         this.weatherData = response.data;
         this.setCurrentCity();
         this.getPhoto();
       })
       .catch((error) => {
-        this.showLoading = false;
+        this.loading = false;
         this.messages.push({
           type: "error",
           text: error.message,
@@ -179,13 +184,13 @@ export default {
            },
          })
        .then((response) => {
-         this.showLoading = false;
+         this.loading = false;
          this.weatherData = response.data;
          this.setCurrentCity();
          this.getPhoto();
        })
        .catch((error) => {
-         this.showLoading = false;
+         this.loading = false;
          this.messages.push({
            type: "error",
            text: error.message,

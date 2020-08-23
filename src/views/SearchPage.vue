@@ -9,7 +9,7 @@
           id="text-box"
         />
         <!-- <button v-on:click="submitQuery" id="send-button">Search</button> -->
-        <div class="citylist">
+        <div class="submits">
           <button @click="submitQuery">Search</button>
           <button @click="picker(); submitQuery();">Random city</button>
           <button @click="goToCurrent">Current city</button>
@@ -19,8 +19,8 @@
 </template>
 
 <script>
-
 export default {
+
   name: "SearchPage",
   data() {
     return {
@@ -41,6 +41,7 @@ export default {
   },
   mounted(){
     this.picker();
+    this.getPhoto();
   },
   methods: {
     submitQuery: function() { //push search query to results view
@@ -57,8 +58,8 @@ export default {
     picker: function(){
       var randomIndex = Math.floor(Math.random() * this.cityList.length);
       this.query = this.cityList[randomIndex];
-    }
-  }
+    },
+  },
 };
 </script>
 

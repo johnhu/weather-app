@@ -1,5 +1,6 @@
 <template>
     <div id="body">
+      
     <div class="content"><div id="form">
     <p>Enter a city</p>
     <input
@@ -8,11 +9,10 @@
     placeholder="Seattle"
     id="text-box"
     />
-    <!-- <button v-on:click="getCities" id="send-button">Search</button> -->
     </div>
-    <!--Iterates through results and displays city search data in a list -->
     <div id="search-results">
-    <load-spinner v-if="showLoading"></load-spinner>
+    <load-spinner v-if="loading">
+    </load-spinner>
     <ul class="cities" v-if="results && results.list.length > 0"> 
     <li v-for="(city,index) in results.list" :key="index">
     <router-link class="result-name" v-bind:to="{ name: 'WeatherData',
@@ -30,22 +30,20 @@
 </template>
 
 <script>
-// import Spinner from "@/components/Spinner";
+import { ClipLoader } from '@saeris/vue-spinners'
 import axios from 'axios';
-// import MessageContainer from "@/components/MessageContainer";
 
 export default {
   name: "SearchResults",
   components: {
-    // "spinner": Spinner,
-    // "message-container": MessageContainer,
+    "load-spinner":ClipLoader
   },
   data() {
     return {
       openweathermap: '//api.openweathermap.org/data/2.5/',
       results: null,
       query: "",
-      showLoading: false,
+      loading: false,
       message: null
     };
   },
@@ -56,7 +54,7 @@ export default {
     /*city is passed into listItems array*/
     getCities: function() {
       this.results = null;
-      this.showLoading = true;
+      this.loading = true;
 
       axios.get(this.openweathermap+'find', {
         params: {
@@ -67,19 +65,19 @@ export default {
       .then(response => {
       this.results = response.data;
       this.handleResults();
-      this.showLoading = false;
+      this.loading = false;
       })
       .catch(error => {
         this.messages.push({
           type: 'error',
           text: error.message
         });
-        this.showLoading = false;
+        this.loading = false;
       });
       },
     handleResults: function(){
       if (this.results.count == 1) {
-        this.showLoading = true;
+        this.loading = true;
         this.$router.push({
         name: "WeatherData",
         params: {

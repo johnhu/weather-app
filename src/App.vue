@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <v-btn-toggle class="units-toggle" v-model="toggle_exclusive" mandatory>
-    <v-btn @click="isCelsius=true">
-    &deg;C
-    </v-btn>
-    <v-btn @click="isCelsius=false">
-    &deg;F
-    </v-btn>
-    </v-btn-toggle>
+    
+<v-btn-toggle class="units-toggle" v-model="toggle_exclusive" mandatory>
+<v-btn @click="isCelsius=true">
+&deg;C
+</v-btn>
+<v-btn @click="isCelsius=false">
+&deg;F
+</v-btn>
+</v-btn-toggle>
     <router-link v-bind:to="{ name: 'SearchPage'}" id="title">
     weather
     <br />app
@@ -21,21 +22,19 @@
 import Vue from "vue";
 import VTooltip from "v-tooltip";
 import modal from "@/components/modal.vue";
-import VueTemperatureFilter from 'vue-temperature-filter';
 
 Vue.use(VTooltip);
 Vue.use(modal);
-Vue.use(VueTemperatureFilter); 
 
 export default {
   name: "app",
+  components: {
+  },
   data() {
     return {
-      isCelsius: Boolean
     };
   },
   methods: {
-    
   }
 };
 </script>
@@ -88,7 +87,6 @@ export default {
 .units-toggle {
   text-decoration: none;
   background: none;
-  position: fixed;
   top: -50px;
   z-index: 9997;
   overflow: auto;
