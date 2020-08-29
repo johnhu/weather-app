@@ -4,9 +4,8 @@
       <div class="modal-wrapper" @click.stop>
         <div class="modal-container">
           <div class="modal-header">
-            <h3>{{city}}</h3>
             <h3 class="date">{{data.dt|formatDate}}</h3>
-            <h3>{{data.weather[0].description}}</h3>
+            <h3 class="modal-city">{{city}}</h3>
             <button class="modal-default-button" @click="$emit('close')">X</button>
           </div>
 
@@ -40,10 +39,11 @@
             </div>
             <div class="modal-icon">
               <img
-                v-bind:src="'http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png'"
+                v-bind:src="require('@/assets/' + data.weather[0].icon + '.svg')"
                 v-bind:alt="data.weather[0].main"
                 width="50%"
               />
+              <h3 class="modal-main">{{data.weather[0].description}}</h3>
             </div>
           </div>
 
@@ -134,6 +134,9 @@ export default {
 };
 </script>
 <style>
+.modal-icon h3 {
+  color: #363636;
+}
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -147,7 +150,7 @@ export default {
 }
 
 .modal-wrapper {
-  background: rgb(255, 255, 255, 0.8);
+  background: rgba(116, 162, 173, 0.8);
   border-radius: 25px;
   width: 35%;
   box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.3);
@@ -159,13 +162,12 @@ export default {
 }
 
 .date {
-  color: #056272;
+  color: #bfdadf;
 }
 
 tr,
-td,
-p {
-  color: black;
+td {
+  color: rgb(255, 255, 255);
   text-align: left;
 }
 
@@ -177,13 +179,17 @@ p {
 
 .modal-header {
   border-bottom: 1px solid #eeeeee;
-  color: #363636;
+  color: #dbdbdb;
   justify-content: space-between;
 }
 
 .modal-body {
   display: flex;
   padding: 20px 10px;
+}
+
+h3.modal-main {
+  color: #dbdbdb;
 }
 
 .modal-footer {
@@ -195,8 +201,8 @@ p {
 }
 
 .avg-temp {
-  font-size: 2.5rem;
-  color: rgb(114, 114, 114);
+  font-size: 3.5rem;
+  color: #dbdbdb;
 }
 .modal-temp,
 .modal-data,

@@ -16,7 +16,6 @@
             </h2>
           </header>
           <div v-if="weatherData" class="main-weather">
-            <spinner v-if="showLoading"></spinner>
             <h3 id="currently">Currently</h3>
             <div class="weather-image">
               <weather-main :weatherMain="weatherData"></weather-main>
@@ -37,15 +36,15 @@
                   <!-- <v-hover v-slot:default="{ hover }"> -->
                     <div class="slide" @click="showModal = true, addToModal(i);">
                       <h3>{{forecast.dt|formatDate}}</h3>
-                      <img
-                        v-bind:src="'http://openweathermap.org/img/wn/' + forecast.weather[0].icon + '.png'"
-                        v-bind:alt="forecast.weather[0].main"
-                        width="50%"
-                      />
+                      <div class="slide-img-div">
+                      <img class="slide-img" :src="require('@/assets/' + forecast.weather[0].icon + '.svg')"
+                      :alt="forecast.weather[0].main"
+                      width=50%
+                      /></div>
                       <!-- <v-expand-transition>
                         <modal v-if="hover" :data="modalData" :avgTemp="avgTemp"></modal>
                       </v-expand-transition> -->
-                      <h4>{{forecast.weather[0].main}}</h4>
+                      <h4 class="slide-main">{{forecast.weather[0].main}}</h4>
                       
                     </div>
                   <!-- </v-hover> -->
@@ -57,7 +56,7 @@
           </div>
           <div id="data-footer">
           <button class="new-photo" @click="newPhoto()">New Photo</button>
-          <h5 id="attribution">Photo courtesy of {{photo.photographer}} via <a href="https://www.pexels.com/">Pexels</a></h5></div>
+          <h5 id="attribution">Photo by {{photo.photographer}} on <a href="https://www.pexels.com/">Pexels</a></h5></div>
         </v-container>
       </div>
     </v-parallax>
@@ -98,17 +97,12 @@ export default {
     showModal: false,
     query: "",
     initiallyFailed: false,
-    // isCelsius: this.$parent.isCelsius,
     loading: false,
   }),
-  // beforeMount() {
-    
-  // },
   created() {
-    this.getWeather();
     this.loading = true;
+    this.getWeather();
   },
-
   filters: {
     formatDate: function (timestamp) {
       let date = new Date(timestamp * 1000);
@@ -178,7 +172,7 @@ export default {
         //note: onecall is only able to accept lat/lon
          params: {
           lat: this.$route.params.cityLat,
-       lon: this.$route.params.cityLon,
+          lon: this.$route.params.cityLon,
            appid: "cadb942492f5c2c67512076c9cd5e63d",
           units: "metric"
            },
@@ -199,28 +193,6 @@ export default {
        }
        }
     ,
-    // fetchByLocation(lat, lon) {
-    //   axios
-    //     .get(this.openweathermap + "weather", {
-    //       params: {
-    //         lat,
-    //         lon,
-    //         appid: "cadb942492f5c2c67512076c9cd5e63d",
-    //         units: "imperial",
-    //       },
-    //     })
-    //     .then((response) => {
-    //       this.currentCity = response.data;
-    //       this.showLoading = false;
-    //     })
-    //     .catch((error) => {
-    //       this.messages.push({
-    //         type: "error",
-    //         text: error.message,
-    //       });
-    //       this.showLoading = false;
-    //     });
-    // },
     setCurrentCity(){
       this.currentCity = this.$route.params.cityName + ", " + this.$route.params.cityCountry;
     },
@@ -257,8 +229,6 @@ export default {
       var randomIndex = Math.floor(Math.random() * this.photos.length);
       this.photo = this.photos[randomIndex];
     }
-    // fetchOneCall(lat, lon) {
-    // },
 }};
 </script>
 
@@ -343,6 +313,13 @@ span {
   cursor: pointer;
 }
 
+.slide-main {
+  font-size: 2.2rem;
+  position: absolute;
+  text-align: center;
+  bottom: 10px;
+}
+
 .new-photo {
   font-weight: bold;
   color:#2c3e50;
@@ -358,7 +335,6 @@ span {
   display: block;
   line-height: normal;
 }
-
 
 @media only screen and (max-width: 375px) {
   v-main {

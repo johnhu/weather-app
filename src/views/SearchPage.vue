@@ -12,7 +12,6 @@
         <div class="submits">
           <button @click="submitQuery">Search</button>
           <button @click="picker(); submitQuery();">Random city</button>
-          <button @click="goToCurrent">Current city</button>
         </div>
       </div>
   </div>
@@ -32,7 +31,7 @@ export default {
       'Rio De Janeiro', 'Lagos', 'Manila', 'Kinshasa', 'Shenzhen', 'Lahore', 'Bangalore', 'Bogota', 'Jakarta',
       'Lima', 'Hyderabad', 'Tehran', 'Ho Chi Minh City', 'Luanda', 'Kuala Lumpur', 'Madrid', 'Houston', 'Dallas',
       'Seattle', 'Vancouver', 'Singapore', 'Atlanta', 'Philadelphia', 'Khartoum', 'Saint Petersburg','Athens',
-      'Amsterdam', ],
+      'Amsterdam', 'Taipei'],
       query: ''
     };
   },

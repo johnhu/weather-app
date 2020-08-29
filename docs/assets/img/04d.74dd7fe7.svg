@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="04d.svg"
+   version="1.1"
+   viewBox="0 0 86.52 67.29"
+   data-name="Layer 1"
+   id="Layer_1">
+  <metadata
+     id="metadata40">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:current-layer="Layer_1"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="60.399209"
+     inkscape:cx="24.580767"
+     inkscape:zoom="4.3928559"
+     showgrid="false"
+     id="namedview38"
+     inkscape:window-height="1017"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <defs
+     id="defs28">
+    <style
+       id="style26">.cls-1{fill:none;stroke:#fff492;stroke-miterlimit:10;stroke-width:2px;}.cls-2{fill:#caf7ff;}</style>
+  </defs>
+  <g
+     style="stroke-width:2.24759978;stroke-miterlimit:4;stroke-dasharray:none;stroke:#caf7ff;stroke-opacity:1;fill:#000000;fill-opacity:0"
+     id="g141"
+     transform="matrix(1.2902653,0,0,1.2902653,39.43859,11.860374)">
+    <path
+       sodipodi:nodetypes="ccsccc"
+       class="cls-2"
+       d="m 27.904597,27.137827 c -0.468669,-8.345288 -11.848835,-10.402846 -15.21,-2.75 -3.3771642,-1.476712 -7.2580805,0.524047 -8.0141473,4.131566 -0.7560667,3.607519 1.9949084,6.998195 5.6808143,7.001767 h 17.316667 c 5.54543,0.105423 5.769691,-8.188949 0.226666,-8.383333 z"
+       id="path139"
+       style="fill:#000000;fill-opacity:0;stroke:#caf7ff;stroke-width:2.24759978;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:#000000;fill-opacity:0;stroke:#caf7ff;stroke-width:2.24759978;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path990"
+       d="m 27.904597,27.137827 c -0.468669,-8.345288 -11.848835,-10.402846 -15.21,-2.75 -3.3771642,-1.476712 -7.2580805,0.524047 -8.0141473,4.131566 -0.7560667,3.607519 1.9949084,6.998195 5.6808143,7.001767 h 17.316667 c 5.54543,0.105423 5.769691,-8.188949 0.226666,-8.383333 z"
+       class="cls-2"
+       sodipodi:nodetypes="ccsccc" />
+  </g>
+  <g
+     transform="matrix(1.7529951,0,0,1.7529951,-1.3216376,-27.074344)"
+     id="g996"
+     style="stroke-width:1.66535;stroke-miterlimit:4;stroke-dasharray:none">
+    <path
+       style="fill:none;fill-opacity:1;stroke:#caf7ff;stroke-width:1.66535;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path992"
+       d="m 27.904597,27.137827 c -0.468669,-8.345288 -11.848835,-10.402846 -15.21,-2.75 -3.3771642,-1.476712 -7.2580805,0.524047 -8.0141473,4.131566 -0.7560667,3.607519 1.9949084,6.998195 5.6808143,7.001767 h 17.316667 c 5.54543,0.105423 5.769691,-8.188949 0.226666,-8.383333 z"
+       class="cls-2"
+       sodipodi:nodetypes="ccsccc" />
+    <path
+       sodipodi:nodetypes="ccsccc"
+       class="cls-2"
+       d="m 27.904597,27.137827 c -0.468669,-8.345288 -11.848835,-10.402846 -15.21,-2.75 -3.3771642,-1.476712 -7.2580805,0.524047 -8.0141473,4.131566 -0.7560667,3.607519 1.9949084,6.998195 5.6808143,7.001767 h 17.316667 c 5.54543,0.105423 5.769691,-8.188949 0.226666,-8.383333 z"
+       id="path994"
+       style="fill:none;fill-opacity:1;stroke:#caf7ff;stroke-width:1.66535;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

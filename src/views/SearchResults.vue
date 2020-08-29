@@ -155,6 +155,7 @@ li {
 
 p {
   margin-bottom: 5px;
+  text-align: left;
 }
 
 #text-box {

@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import SearchPage from '@/views/SearchPage'
 import SearchResults from '@/views/SearchResults'
 import WeatherData from '@/views/WeatherData'
-import CurrentCity from '@/views/CurrentCity'
 
 
 Vue.use(VueRouter)
@@ -23,11 +22,6 @@ Vue.use(VueRouter)
       path: '/weather',
       name: 'WeatherData',
       component: WeatherData
-    },
-    {
-      path: '/current',
-      name: 'CurrentCity',
-      component: CurrentCity
     }
 ]
 

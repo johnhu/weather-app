@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <img
-      v-bind:src="'http://openweathermap.org/img/wn/' + weatherMain.current.weather[0].icon + '.png'"
-      v-bind:alt="weatherMain.current.weather[0].main"
-      width="30%"
+    <img :src="require('@/assets/' + weatherMain.current.weather[0].icon + '.svg')"
+      :alt="weatherMain.current.weather[0].main"
+      width="50%"
     />
     <h4>{{weatherMain.current.weather[0].main}}</h4>
   </div>

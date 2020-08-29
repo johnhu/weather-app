@@ -32,6 +32,7 @@ export default {
   },
   data() {
     return {
+      isCelsius: Boolean
     };
   },
   methods: {
@@ -66,7 +67,8 @@ export default {
 }
 
 .v-btn-toggle > .v-btn.v-btn--active {
-    font-weight: bold;
+  font-weight: bold;
+  color: white;
 }
 .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default{
   border-radius: 50px;
