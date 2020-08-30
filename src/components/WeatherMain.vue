@@ -27,5 +27,6 @@ export default {
 
 h4 {
   font-size: 18px;
+  text-align: left;
 }
 </style>

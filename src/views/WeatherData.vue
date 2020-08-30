@@ -1,27 +1,23 @@
 <template>
   <v-main>
-    <load-spinner v-if="loading">
-    </load-spinner>
-    <v-parallax v-if="photo" :src="photo.src.large" :alt="this.currentCity">
-      
+    <load-spinner v-if="loading"></load-spinner>
+    <v-parallax v-if="photo" :src="photo.src.large2x" :alt="this.currentCity">
       <div class="overlay">
-        
         <v-container>
           <header>
             <h2 id="weather-title">
-              The weather in
-              <span
-                v-if="weatherData"
-              >{{ currentCity }}</span>
+            <span v-if="weatherData">{{ currentCity }}</span>
             </h2>
           </header>
           <div v-if="weatherData" class="main-weather">
             <h3 id="currently">Currently</h3>
-            <div class="weather-image">
-              <weather-main :weatherMain="weatherData"></weather-main>
-            </div>
-            <div class="weather-info">
-              <weather-info :currentWeather="weatherData"></weather-info>
+            <div id="current-weather">
+              <div class="weather-image">
+                <weather-main :weatherMain="weatherData"></weather-main>
+              </div>
+              <div class="weather-info">
+                <weather-info :currentWeather="weatherData"></weather-info>
+              </div>
             </div>
           </div>
           <div v-if="weatherData" class="forecast">
@@ -30,33 +26,46 @@
               :visible-slides="3"
               :slide-ratio="1 / 4"
               :dragging-distance="70"
+              arrows-on-edges
             >
               <vueper-slide v-for="(forecast,i) in weatherData.daily" :key="i">
                 <template v-slot:content>
                   <!-- <v-hover v-slot:default="{ hover }"> -->
-                    <div class="slide" @click="showModal = true, addToModal(i);">
-                      <h3>{{forecast.dt|formatDate}}</h3>
-                      <div class="slide-img-div">
-                      <img class="slide-img" :src="require('@/assets/' + forecast.weather[0].icon + '.svg')"
-                      :alt="forecast.weather[0].main"
-                      width=50%
-                      /></div>
-                      <!-- <v-expand-transition>
-                        <modal v-if="hover" :data="modalData" :avgTemp="avgTemp"></modal>
-                      </v-expand-transition> -->
-                      <h4 class="slide-main">{{forecast.weather[0].main}}</h4>
-                      
+                  <div class="slide" @click="showModal = true, addToModal(i);">
+                    <h3>{{forecast.dt|formatDate}}</h3>
+                    <div class="slide-img-div">
+                      <img
+                        class="slide-img"
+                        :src="require('@/assets/' + forecast.weather[0].icon + '.svg')"
+                        :alt="forecast.weather[0].main"
+                        width="50%"
+                      />
                     </div>
+                    <!-- <v-expand-transition>
+                        <modal v-if="hover" :data="modalData" :avgTemp="avgTemp"></modal>
+                    </v-expand-transition>-->
+                    <h4 class="slide-main">{{forecast.weather[0].main}}</h4>
+                  </div>
                   <!-- </v-hover> -->
                 </template>
               </vueper-slide>
             </vueper-slides>
             <!-- use the modal component, pass in the prop -->
-            <modal v-if="showModal" @close="showModal = false" :data="modalData" :avgTemp="avgTemp" :city="currentCity"></modal>
+            <modal
+              v-if="showModal"
+              @close="showModal = false"
+              :data="modalData"
+              :avgTemp="avgTemp"
+              :city="currentCity"
+            ></modal>
           </div>
           <div id="data-footer">
-          <button class="new-photo" @click="newPhoto()">New Photo</button>
-          <h5 id="attribution">Photo by {{photo.photographer}} on <a href="https://www.pexels.com/">Pexels</a></h5></div>
+          <h5 id="attribution">
+            Photo by {{photo.photographer}} on
+            <a href="https://www.pexels.com/">Pexels</a>
+            </h5>
+            <button class="new-photo" @click="newPhoto()">New Photo</button>
+          </div>
         </v-container>
       </div>
     </v-parallax>
@@ -70,7 +79,7 @@ import CurrentWeather from "@/components/CurrentWeather";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import modal from "@/components/modal.vue";
-import { ClipLoader } from '@saeris/vue-spinners'
+import { ClipLoader } from "@saeris/vue-spinners";
 
 export default {
   name: "WeatherData",
@@ -80,7 +89,7 @@ export default {
     "weather-info": CurrentWeather,
     "weather-main": WeatherMain,
     modal,
-    "load-spinner":ClipLoader
+    "load-spinner": ClipLoader,
   },
   data: () => ({
     openweathermap: "//api.openweathermap.org/data/2.5/",
@@ -139,72 +148,70 @@ export default {
       let avg = sum / this.tempValues.length;
       this.avgTemp = avg;
     },
-    getWeather (){
+    getWeather() {
       this.loading = true;
       if (this.$parent.isCelsius == false) {
-    axios
-      .get(this.openweathermap + "onecall", {
-        //note: onecall is only able to accept lat/lon
-        params: {
-          lat: this.$route.params.cityLat,
-          lon: this.$route.params.cityLon,
-          appid: "cadb942492f5c2c67512076c9cd5e63d",
-          units: "imperial"
-          },
-        })
-      .then((response) => {
-        this.loading = false;
-        this.weatherData = response.data;
-        this.setCurrentCity();
-        this.getPhoto();
-      })
-      .catch((error) => {
-        this.loading = false;
-        this.messages.push({
-          type: "error",
-          text: error.message,
-        });
-      });
-      }
-      else {
         axios
-       .get(this.openweathermap + "onecall", {
-        //note: onecall is only able to accept lat/lon
-         params: {
-          lat: this.$route.params.cityLat,
-          lon: this.$route.params.cityLon,
-           appid: "cadb942492f5c2c67512076c9cd5e63d",
-          units: "metric"
-           },
-         })
-       .then((response) => {
-         this.loading = false;
-         this.weatherData = response.data;
-         this.setCurrentCity();
-         this.getPhoto();
-       })
-       .catch((error) => {
-         this.loading = false;
-         this.messages.push({
-           type: "error",
-           text: error.message,
-       });
-       });
-       }
-       }
-    ,
-    setCurrentCity(){
-      this.currentCity = this.$route.params.cityName + ", " + this.$route.params.cityCountry;
+          .get(this.openweathermap + "onecall", {
+            //note: onecall is only able to accept lat/lon
+            params: {
+              lat: this.$route.params.cityLat,
+              lon: this.$route.params.cityLon,
+              appid: "cadb942492f5c2c67512076c9cd5e63d",
+              units: "imperial",
+            },
+          })
+          .then((response) => {
+            this.loading = false;
+            this.weatherData = response.data;
+            this.setCurrentCity();
+            this.getPhoto();
+          })
+          .catch((error) => {
+            this.loading = false;
+            this.messages.push({
+              type: "error",
+              text: error.message,
+            });
+          });
+      } else {
+        axios
+          .get(this.openweathermap + "onecall", {
+            //note: onecall is only able to accept lat/lon
+            params: {
+              lat: this.$route.params.cityLat,
+              lon: this.$route.params.cityLon,
+              appid: "cadb942492f5c2c67512076c9cd5e63d",
+              units: "metric",
+            },
+          })
+          .then((response) => {
+            this.loading = false;
+            this.weatherData = response.data;
+            this.setCurrentCity();
+            this.getPhoto();
+          })
+          .catch((error) => {
+            this.loading = false;
+            this.messages.push({
+              type: "error",
+              text: error.message,
+            });
+          });
+      }
+    },
+    setCurrentCity() {
+      this.currentCity =
+        this.$route.params.cityName + ", " + this.$route.params.cityCountry;
     },
     async getPhoto() {
-      var query = ''
+      var query = "";
       //conditionally choose query to fetch a photo of the weather
       // if city image not found
-      if (this.initiallyFailed == false){ 
-      query = this.$route.params.cityName;
-      }
-      else{
-      query = this.weatherData.current.weather[0].main;
+      if (this.initiallyFailed == false) {
+        query = this.$route.params.cityName;
+      } else {
+        query = this.weatherData.current.weather[0].main;
       }
       const {
         data: { photos },
@@ -219,23 +226,27 @@ export default {
       this.newPhoto();
       this.handleUndefined();
     },
-    handleUndefined(){
-      if (this.photos == undefined || this.photos.length == 0 ) {
+    handleUndefined() {
+      if (this.photos == undefined || this.photos.length == 0) {
         this.initiallyFailed = true;
         this.getPhoto();
       }
     },
-    newPhoto(){
+    newPhoto() {
       var randomIndex = Math.floor(Math.random() * this.photos.length);
       this.photo = this.photos[randomIndex];
-    }
-}};
+    },
+  },
+};
 </script>
 
 <style scoped>
 v-main {
-  width: 100%;
-  margin: auto;
+  height: 100%;
+}
+
+.v-parallax {
+  height: 880px !important;
 }
 
 .overlay {
@@ -244,19 +255,26 @@ v-main {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(152, 187, 201, 0.7);
+  background-color: rgba(152, 187, 201, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.container {
+  width: 100%;
+  height: 100%;
+}
+
 #weather-title {
-  margin-bottom: 20px;
+  font-size: 2.2em;
+  margin: 20px;
+  color: #caf7ff;
 }
 
 .main-weather {
   margin: auto;
-  padding-bottom: 50px;
+  margin-bottom: 50px;
   display: flex;
   align-items: center;
   width: 50%;
@@ -266,12 +284,18 @@ v-main {
   width: 33.33%;
 }
 
+#current-weather {
+  width: 66.66%;
+  display: flex;
+  margin: auto;
+}
+
 .weather-image {
-  width: 33.33%;
+  width: 50%;
 }
 
 .weather-info {
-  width: 33.33%;
+  width: 50%;
 }
 
 h1,
@@ -291,13 +315,8 @@ h3 {
 h5 {
   float: right;
 }
-h5>a{
-  color:#d5f5ff;
-}
-
-span {
-  color: #caf7ff;
-  text-shadow: 5px 0px 7px #434969;
+h5 > a {
+  color: #d5f5ff;
 }
 
 .vueperslides {
@@ -322,9 +341,10 @@ span {
 
 .new-photo {
   font-weight: bold;
-  color:#2c3e50;
-  float: right;
+  color: #caf7ff;
   padding: 8px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .new-photo:hover {
   background-color: rgb(214, 214, 214, 0.2);
@@ -332,8 +352,16 @@ span {
 }
 
 #data-footer {
-  display: block;
-  line-height: normal;
+  display: inline-block;
+}
+
+@media only screen and (max-width: 965px) {
+  .vueperslides__arrows--outside .vueperslides__arrow--prev {
+    left: 0 !important;
+  }
+  .vueperslides__arrows--outside .vueperslides__arrow--next {
+    right: 0 !important;
+  }
 }
 
 @media only screen and (max-width: 375px) {
@@ -341,6 +369,31 @@ span {
     position: absolute;
     top: 20%;
     left: 10%;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  #weather-title {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+  h4.slide-main {
+    font-size: 110%;
+  }
+  .main-weather {
+    display: grid;
+    width:100%;
+    margin-bottom: 0px;
+  }
+  #current-weather {
+    display: flex;
+    align-items:center;
+  }
+
+  #currently {
+    display: grid;
+    text-align: center;
+    width: 100%;
   }
 }
 </style>

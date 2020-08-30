@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+   
+    <router-link v-bind:to="{ name: 'SearchPage'}" id="title">
+    weather
+    <br />app
+    </router-link>
+    
+    <router-view />
     
 <v-btn-toggle class="units-toggle" v-model="toggle_exclusive" mandatory>
 <v-btn @click="isCelsius=true">
@@ -9,12 +16,6 @@
 &deg;F
 </v-btn>
 </v-btn-toggle>
-    <router-link v-bind:to="{ name: 'SearchPage'}" id="title">
-    weather
-    <br />app
-    </router-link>
-    <router-view />
-    
   </div>
 </template>
 
@@ -47,11 +48,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 #title {
   margin-top: 5px;
-  color: #2c3e50;
+  color: rgb(255, 255, 255);
   font-weight: bold;
   font-size: 2em;
   text-align: left;
@@ -59,16 +59,24 @@ export default {
   position: absolute;
   left: 12px;
   top: 0;
-  z-index: 9998;
+  z-index: 9997;
 }
 
-.v-btn{
-  font-weight: bold;
+.units-toggle {
+  text-decoration: none;
+  background: none;
+  overflow: auto;
+  position: absolute;
+  bottom: 0;
+}
+
+.v-btn {
+  color:rgb(26, 105, 119);
 }
 
 .v-btn-toggle > .v-btn.v-btn--active {
   font-weight: bold;
-  color: white;
+  color:rgb(26, 105, 119);
 }
 .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default{
   border-radius: 50px;
@@ -86,15 +94,27 @@ export default {
     background-color: transparent !important;
 }
 
-.units-toggle {
-  text-decoration: none;
-  background: none;
-  top: -50px;
-  z-index: 9997;
-  overflow: auto;
-}
 
 #title:hover {
   color: rgb(114, 114, 114);
 }
+
+
+@media only screen and (max-width: 980px) {
+  v-main {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+    .units-toggle {
+  margin-top: 50px;
+}
+  h4.slide-main {
+    font-size:10px;
+  }
+}
+
 </style>

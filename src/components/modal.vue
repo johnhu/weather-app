@@ -150,7 +150,7 @@ export default {
 }
 
 .modal-wrapper {
-  background: rgba(116, 162, 173, 0.8);
+  background: rgba(112, 172, 182, 0.8);
   border-radius: 25px;
   width: 35%;
   box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.3);
