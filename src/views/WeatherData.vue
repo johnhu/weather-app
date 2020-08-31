@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <load-spinner v-if="loading"></load-spinner>
+    <load-spinner v-if="loading" color="ffffff" size=50></load-spinner>
     <v-parallax v-if="photo" :src="photo.src.large2x" :alt="this.currentCity">
       <div class="overlay">
         <v-container>
@@ -60,12 +60,15 @@
             ></modal>
           </div>
           <div id="data-footer">
-          <h5 id="attribution">
-            Photo by {{photo.photographer}} on
-            <a href="https://www.pexels.com/">Pexels</a>
-            </h5>
-            <button class="new-photo" @click="newPhoto()">New Photo</button>
-          </div>
+          <div id="attribution"><h5>
+          Photo of
+          <p v-if="this.initiallyFailed==false">{{this.$route.params.cityName}}</p>
+          <p v-else>{{this.weatherData.current.weather[0].main}} (weather in {{this.$route.params.cityName}})</p>
+          by {{photo.photographer}} on
+          <a href="https://www.pexels.com/">Pexels</a>
+          </h5></div>
+          <button class="new-photo" @click="newPhoto()">New Photo</button>
+        </div>
         </v-container>
       </div>
     </v-parallax>
@@ -269,7 +272,7 @@ v-main {
 #weather-title {
   font-size: 2.2em;
   margin: 20px;
-  color: #caf7ff;
+  color: white;
 }
 
 .main-weather {
@@ -352,7 +355,10 @@ h5 > a {
 }
 
 #data-footer {
-  display: inline-block;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 @media only screen and (max-width: 965px) {

@@ -1,21 +1,21 @@
 <template>
   <div id="app">
    
-    <router-link v-bind:to="{ name: 'SearchPage'}" id="title">
+    <router-link v-bind:to="{ name: 'Search'}" id="title">
     weather
     <br />app
     </router-link>
-    
     <router-view />
     
-<v-btn-toggle class="units-toggle" v-model="toggle_exclusive" mandatory>
+<div class="units-toggle">
+<v-btn-toggle v-model="toggle_exclusive" mandatory>
 <v-btn @click="isCelsius=true">
 &deg;C
 </v-btn>
 <v-btn @click="isCelsius=false">
 &deg;F
 </v-btn>
-</v-btn-toggle>
+</v-btn-toggle></div>
   </div>
 </template>
 
@@ -23,9 +23,11 @@
 import Vue from "vue";
 import VTooltip from "v-tooltip";
 import modal from "@/components/modal.vue";
+import axios from "axios";
 
 Vue.use(VTooltip);
 Vue.use(modal);
+Vue.use(axios);
 
 export default {
   name: "app",
@@ -33,16 +35,16 @@ export default {
   },
   data() {
     return {
-      isCelsius: Boolean
+      isCelsius: Boolean,
+   
     };
   },
-  methods: {
-  }
 };
 </script>
 
 <style>
 #app {
+  
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -50,33 +52,34 @@ export default {
   color: #2c3e50;
 }
 #title {
-  margin-top: 5px;
+  padding: 8px;
   color: rgb(255, 255, 255);
   font-weight: bold;
   font-size: 2em;
   text-align: left;
   text-decoration: none;
-  position: absolute;
+  position: fixed;
   left: 12px;
   top: 0;
   z-index: 9997;
 }
 
 .units-toggle {
+  padding: 8px;
   text-decoration: none;
   background: none;
   overflow: auto;
-  position: absolute;
+  position: fixed;
   bottom: 0;
 }
 
-.v-btn {
-  color:rgb(26, 105, 119);
+span.v-btn__content{
+  color:rgb(255, 255, 255);
 }
 
 .v-btn-toggle > .v-btn.v-btn--active {
   font-weight: bold;
-  color:rgb(26, 105, 119);
+  color:rgb(255, 255, 255);
 }
 .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default{
   border-radius: 50px;
@@ -96,7 +99,7 @@ export default {
 
 
 #title:hover {
-  color: rgb(114, 114, 114);
+  color: rgba(240, 240, 240, 0.8);
 }
 
 
