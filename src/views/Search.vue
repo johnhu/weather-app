@@ -279,7 +279,7 @@ export default {
 .content {
   text-align: center;
   position: absolute;
-  top: -220px;
+  top: -290px;
   transform: translate(-50%, -50%);
   width: 40%;
   height: 100%;
@@ -385,7 +385,7 @@ a {
 #data-footer {
   display: inline-grid;
   padding: 8px;
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
 }

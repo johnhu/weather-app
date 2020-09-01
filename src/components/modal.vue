@@ -158,7 +158,7 @@ export default {
   border-radius: 25px;
   width: 35%;
   box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.3);
-  overflow-x: auto;
+  overflow-x: hidden;
   display: table;
   /* flex-direction: column; */
   z-index: 9998;
@@ -265,5 +265,13 @@ table {
  float: right;
  width:10%;
 }
+}
+
+@media only screen and (max-width: 425px) {
+  
+.modal-backdrop {
+  justify-content:left;
+}
+
 }
 </style>
