@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-   
-    <router-link v-bind:to="{ name: 'Search'}" id="title">
+    <router-link v-bind:to="{ name: 'Search'}"  id="title">
     weather
-    <br />app
+    <br />app 
     </router-link>
+   
     <router-view />
     
 <div class="units-toggle">
@@ -51,6 +51,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 #title {
   padding: 8px;
   color: rgb(255, 255, 255);
@@ -65,7 +66,7 @@ export default {
 }
 
 .units-toggle {
-  padding: 8px;
+  margin: 12px;
   text-decoration: none;
   background: none;
   overflow: auto;
@@ -100,6 +101,9 @@ span.v-btn__content{
 
 #title:hover {
   color: rgba(240, 240, 240, 0.8);
+  -webkit-text-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
+  -moz-text-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
+  text-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
 }
 
 

@@ -81,4 +81,9 @@ h4 {
   color: rgb(224, 224, 224);
 }
 
+@media only screen and (max-width: 425px) {
+  .temp {
+    font-size: 42px;
+  }
+}
 </style>

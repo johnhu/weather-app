@@ -32,7 +32,7 @@
                 <template v-slot:content>
                   <!-- <v-hover v-slot:default="{ hover }"> -->
                   <div class="slide" @click="showModal = true, addToModal(i);">
-                    <h3>{{forecast.dt|formatDate}}</h3>
+                    <h3 class="slide-date">{{forecast.dt|formatDate}}</h3>
                     <div class="slide-img-div">
                       <img
                         class="slide-img"
@@ -61,13 +61,20 @@
           </div>
           <div id="data-footer">
           <div id="attribution"><h5>
-          Photo of
-          <p v-if="this.initiallyFailed==false">{{this.$route.params.cityName}}</p>
+          Photo of <p v-if="this.initiallyFailed==false">{{this.$route.params.cityName}}</p>
           <p v-else>{{this.weatherData.current.weather[0].main}} (weather in {{this.$route.params.cityName}})</p>
-          by {{photo.photographer}} on
+          <br>by {{photo.photographer}} on
           <a href="https://www.pexels.com/">Pexels</a>
           </h5></div>
-          <button class="new-photo" @click="newPhoto()">New Photo</button>
+          <div id="footer"><button class="new-photo" @click="newPhoto()">New Photo</button>
+          <a href="http://www.github.com/johnhu/weather-app">
+          <img
+          src="@/assets/github-white.svg"
+          title="GitHub repo"
+          width="20px"
+          height="20px"
+          />
+          </a></div>
         </div>
         </v-container>
       </div>
@@ -244,16 +251,26 @@ export default {
 </script>
 
 <style scoped>
-v-main {
+.main {
   height: 100%;
+}
+
+.container {
+  margin-top: 30px;
 }
 
 .v-parallax {
   height: 880px !important;
+  background-attachment: fixed;
+  backface-visibility: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 .overlay {
-  position: fixed;
+  position:absolute;
+  height: 100%;
+  width:100%;
   top: 0;
   bottom: 0;
   left: 0;
@@ -322,6 +339,10 @@ h5 > a {
   color: #d5f5ff;
 }
 
+h5>p {
+  display: inline-flex;
+}
+
 .vueperslides {
   z-index: 0;
 }
@@ -342,24 +363,44 @@ h5 > a {
   bottom: 10px;
 }
 
-.new-photo {
-  font-weight: bold;
-  color: #caf7ff;
-  padding: 8px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.new-photo:hover {
-  background-color: rgb(214, 214, 214, 0.2);
-  border-radius: 50px;
+button{
+  border: 1px solid rgba(240, 240, 240, 0.8);
+  margin: 8px;
+  padding: 5px;
 }
 
 #data-footer {
+  display: inline-grid;
   padding: 8px;
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
+  z-index: 5;
 }
+
+#attribution {
+  text-align: left;
+  padding: 8px;
+}
+
+#footer {
+  display:flex;
+  padding: 8px;
+  padding-top:0;
+  width:100%
+}
+
+.new-photo {
+  margin: 0;
+  margin-right: 3px;
+  width: 80%;
+}
+
+#footer>a{
+  width: 20%;
+  margin:auto;
+}
+
 
 @media only screen and (max-width: 965px) {
   .vueperslides__arrows--outside .vueperslides__arrow--prev {
@@ -367,14 +408,6 @@ h5 > a {
   }
   .vueperslides__arrows--outside .vueperslides__arrow--next {
     right: 0 !important;
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  v-main {
-    position: absolute;
-    top: 20%;
-    left: 10%;
   }
 }
 
@@ -400,6 +433,25 @@ h5 > a {
     display: grid;
     text-align: center;
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .container {
+    margin-top: 0px;
+  }
+  #weather-title {
+    margin:0;
+    margin-top: 80px;
+  }
+#weather-title>span {
+  font-size: 0.75em;
+}
+#currently {
+  font-size: 23px;
+}
+  .slide-date {
+    font-size: 23px;
   }
 }
 </style>

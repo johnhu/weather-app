@@ -139,6 +139,8 @@ export default {
 }
 .modal-backdrop {
   position: fixed;
+  width: 100%;
+  height:100%;
   top: 0;
   bottom: 0;
   left: 0;
@@ -147,17 +149,19 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 }
 
 .modal-wrapper {
   background: rgba(112, 172, 182, 0.8);
+  position: relative;
   border-radius: 25px;
   width: 35%;
   box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.3);
   overflow-x: auto;
   display: table;
   /* flex-direction: column; */
-  z-index: 9;
+  z-index: 9998;
   transition: opacity 0.3s ease;
 }
 
@@ -186,6 +190,7 @@ td {
 .modal-body {
   display: flex;
   padding: 20px 10px;
+  padding-bottom: 0;
 }
 
 h3.modal-main {
@@ -193,7 +198,6 @@ h3.modal-main {
 }
 
 .modal-footer {
-  border-top: 1px solid #eeeeee;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -254,7 +258,12 @@ table {
 
 @media only screen and (max-width: 768px) {
  .modal-header{
-   display: block;
+   display: inline-flex;
  }
+ 
+.modal-default-button {
+ float: right;
+ width:10%;
+}
 }
 </style>

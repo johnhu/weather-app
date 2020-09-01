@@ -5,16 +5,25 @@
         <div id="body">
           <div class="content">
             <form>
-              <input
-                @click="query=''"
-                v-on:keyup.enter="preFetchPhoto();"
-                v-model="query"
-                id="text-box"
+              <div id="input"><input
+              @click="query=''"
+              v-on:keyup.enter="preFetchPhoto();"
+              v-model="query"
+              id="text-box"
+              
               />
-              <div class="submits">
-                <button @click="preFetchPhoto();">Search city</button>
-                <button @click="picker(); getCities(); preFetchPhoto();">Random city</button>
-              </div>
+                <button id="search" @click="preFetchPhoto();"> <img
+          src="@/assets/search-white.svg"
+          title="search"
+          width="20px"
+          height="20px"
+          /></button>
+                <button id="random" @click="picker(); getCities(); preFetchPhoto();"><img
+          src="@/assets/die-white.svg"
+          title="search"
+          width="20px"
+          height="20px"
+          /></button></div>
             </form>
             <div id="search-results">
               <load-spinner v-if="loading" color="ffffff" size=50></load-spinner>
@@ -44,14 +53,23 @@
           </div>
         </div>
         <div id="data-footer">
+          
           <div id="attribution"><h5>
-          Photo of
-          <p v-if="this.initiallyFailed==false">{{this.query}}</p>
-          <p v-else>{{this.results.list[0].weather[0].main}} (weather in {{this.query}})</p>
+          Photo of <p v-if="this.initiallyFailed==false">{{this.storedQuery}}</p>
+          <p v-else>{{this.results.list[0].weather[0].main}} (weather in {{this.storedQuery}})</p>
+          <br>
           by {{photo.photographer}} on
           <a href="https://www.pexels.com/">Pexels</a>
           </h5></div>
-          <button class="new-photo" @click="newPhoto()">New Photo</button>
+          <div id="footer"><button class="new-photo" @click="newPhoto()">New Photo</button>
+          <a href="http://www.github.com/johnhu/weather-app">
+          <img
+          src="@/assets/github-white.svg"
+          title="GitHub repo"
+          width="20px"
+          height="20px"
+          />
+          </a></div>
         </div>
       </div>
     </v-parallax>
@@ -255,7 +273,7 @@ export default {
 <style scoped>
 #body {
   width: 80%;
-  position: absolute;
+  position: fixed;
   left: 50%;
 }
 .content {
@@ -263,19 +281,23 @@ export default {
   position: absolute;
   top: -220px;
   transform: translate(-50%, -50%);
-  width: 30%;
+  width: 40%;
   height: 100%;
 }
 
 .v-parallax {
   background-size: cover;
+  background-attachment: fixed;
+  backface-visibility: hidden;
   padding: 0;
   margin: 0;
   height: 880px !important;
 }
 
 .overlay {
-  position: fixed;
+  position:absolute;
+  height: 100%;
+  width:100%;
   top: 0;
   bottom: 0;
   left: 0;
@@ -291,8 +313,12 @@ h2 {
   text-align: left;
 }
 
+h5>p {
+  display: inline-flex;
+}
+
 button {
-  border: 1px solid rgba(240, 240, 240, 0.8);
+  border: 0.5px solid rgba(240, 240, 240, 0.8);
   margin: 8px;
   padding: 5px;
 }
@@ -305,14 +331,14 @@ li {
 .error {
   font-weight: bold;
   text-decoration: none;
-  font-size: 1.8em;
+  font-size: 1.7em;
   color: rgb(255, 255, 255);
 }
 .result-name:hover {
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 1.8em;
-  color: rgba(240, 240, 240, 0.8);
+  color: rgba(240, 240, 240, 0.8); 
+  -webkit-text-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
+  -moz-text-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
+  text-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
 }
 
 .city-result {
@@ -328,14 +354,27 @@ a {
   color: #caf7ff;
 }
 
+#input {
+  display:flex;
+  margin-bottom: 15px;
+  -webkit-box-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
+  -moz-box-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
+  box-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
+}
+
 #text-box {
   display: inline-flex;
   background-color: transparent;
-  border: none;
-  border: 1px solid rgb(240, 240, 240, 0.8);
+  border: 0.5px solid rgba(240, 240, 240, 0.5);
   padding: 6px;
-  width: 100%;
+  width: 80%;
   height: 42px;
+}
+
+#search, #random {
+  border: none;
+  width: 10%;
+  margin: 0;
 }
 
 ::placeholder {
@@ -351,8 +390,31 @@ a {
   bottom: 0;
 }
 
+#attribution {
+  text-align: left;
+  padding: 8px;
+}
+
+#footer {
+  display:flex;
+  padding: 8px;
+  padding-top:0;
+  width:100%
+}
+
+.new-photo {
+  margin: 0;
+  margin-right: 3px;
+  width: 80%;
+}
+
+#footer>a{
+  width: 20%;
+  margin:auto;
+}
+
 input {
-  font-size: 1.5rem;
+  font-size: 25px;
   color: rgb(255, 255, 255);
 }
 .title {
@@ -365,44 +427,23 @@ input {
   padding: 0;
 }
 
-.units-toggle {
-  display: none;
-}
-
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: 1040px) {
   .content {
-    width: 70%;
-  }
-  .shortcuts {
-    width: 50%;
-    position: unset;
-  }
-  #search-results {
-    width: 100%;
+    width: 90%;
   }
   .cities {
     text-align: center;
   }
 }
 
-@media only screen and (max-width: 426px) {
-  .shortcuts {
-    display: flexbox;
-    width: 90%;
-    position: unset;
+@media only screen and (max-width: 768px) {
+  .result-name {
+    font-size: 25px;
   }
-
-  #text-box {
-    margin-left: 10px;
-    width: 90%;
-  }
-  #send-button {
-    width: 92%;
-    margin-top: 7px;
-    margin-left: 10px;
-  }
-  .search-result {
-    width: 92%;
+}
+@media only screen and (max-width: 425px) {
+  #random {
+    padding-left: 10px;
   }
 }
 </style>
