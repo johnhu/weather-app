@@ -442,9 +442,14 @@ input {
   }
 }
 @media only screen and (max-width: 425px) {
-  #random {
-    padding-left: 10px;
+  #text-box {
+    width:75%;
   }
+  
+  #search, #random {
+    width: 12.5%;
+  }
+
 }
 </style>
 
