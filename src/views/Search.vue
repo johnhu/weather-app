@@ -27,8 +27,8 @@
             </form>
             <div id="search-results">
               <load-spinner v-if="loading" color="ffffff" size=50></load-spinner>
-              <ul class="cities" v-if="results && results.list.length > 0">
-                <li class="city-result" v-for="(city,index) in results.list" :key="index">
+              <div class="cities" v-if="results && results.list.length > 0">
+                <div class="city-result" v-for="(city,index) in results.list" :key="index">
                   <router-link
                     class="result-name"
                     v-bind:to="{ name: 'WeatherData',
@@ -39,13 +39,19 @@
      } }"
                   >{{ city.name }}, {{ city.sys.country }}</router-link>
 
-                  <img
-                    class="result-img"
-                    :src="require('@/assets/' + city.weather[0].icon + '.svg')"
-                    :alt="city.weather[0].main"
-                  />
-                </li>
-              </ul>
+                  <router-link v-bind:to="{ name: 'WeatherData',
+    params: { cityLat: city.coord.lat,
+    cityLon: city.coord.lon,
+    cityName: city.name,
+    cityCountry: city.sys.country
+     } }"
+                 ><img
+                  class="result-img"
+                  :src="require('@/assets/' + city.weather[0].icon + '.svg')"
+                  :alt="city.weather[0].main"
+                  /></router-link>
+                </div>
+              </div>
               <ul class="error" v-if="message!==''">
                 <li>{{this.message}}</li>
               </ul>
@@ -231,14 +237,10 @@ export default {
       var randomIndex = Math.floor(Math.random() * this.photos.length);
       this.photo = this.photos[randomIndex];
     },
-
-    /*city is passed into listItems array*/
     getCities: function () {
       this.message="";
       this.loading = true;
       if (this.query == ""){
-        // var elem = document.querySelector('.cities');
-        // elem.style.display = 'none';
         this.results = null;
         this.message="Please enter a search term."
           this.loading = false;
@@ -302,7 +304,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(152, 187, 201, 0.8);
+  background-color: rgba(140, 187, 201, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -323,12 +325,9 @@ button {
   padding: 5px;
 }
 
-li {
-  text-align: left;
-}
-
 .result-name,
 .error {
+  margin: auto;
   font-weight: bold;
   text-decoration: none;
   font-size: 1.7em;
@@ -342,12 +341,16 @@ li {
 }
 
 .city-result {
-  margin-bottom: 7px;
+  text-align:left;
+  padding-left: 18px;
+  margin-bottom: 10px;
 }
 
 .result-img {
+  max-width: 100%;
+  max-height: 100%;
+  margin-left: 10px;
   width: 7%;
-  float: right;
 }
 
 a {
@@ -357,6 +360,7 @@ a {
 #input {
   display:flex;
   margin-bottom: 15px;
+  border-radius: 50px;
   -webkit-box-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
   -moz-box-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
   box-shadow: -3px 1px 17px 1px rgba(83, 101, 109, 0.3);
@@ -364,22 +368,20 @@ a {
 
 #text-box {
   display: inline-flex;
+  padding-left: 15px;
+  border-radius: 25px 0px 0px 25px;
   background-color: transparent;
-  border: 0.5px solid rgba(240, 240, 240, 0.5);
-  padding: 6px;
   width: 80%;
   height: 42px;
+}
+#text-box:focus {
+  border: 1px solid rgba(240, 240, 240, 0.5);
 }
 
 #search, #random {
   border: none;
   width: 10%;
   margin: 0;
-}
-
-::placeholder {
-  color: rgb(255, 255, 255);
-  font-size: 1.2em;
 }
 
 #data-footer {
@@ -403,9 +405,14 @@ a {
 }
 
 .new-photo {
+  border-radius: 50px;
   margin: 0;
   margin-right: 3px;
   width: 80%;
+}
+
+.new-photo:hover {
+  color: rgba(240, 240, 240, 0.8);
 }
 
 #footer>a{
@@ -431,23 +438,29 @@ input {
   .content {
     width: 90%;
   }
-  .cities {
-    text-align: center;
-  }
 }
 
 @media only screen and (max-width: 768px) {
   .result-name {
     font-size: 25px;
+    text-decoration: underline;
+    text-decoration-style: dotted;
   }
 }
 @media only screen and (max-width: 425px) {
+  .content {
+    width: 97%;
+  }
+
   #text-box {
-    width:75%;
+    width:72%;
   }
   
   #search, #random {
-    width: 12.5%;
+    width: 14%;
+  }
+  #random {
+    padding-right: 10px;
   }
 
 }

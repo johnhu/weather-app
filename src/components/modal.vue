@@ -1,7 +1,8 @@
 <template>
-  <transition name="modal">
     <div class="modal-backdrop" @click="$emit('close')">
-      <div class="modal-wrapper" @click.stop>
+      
+  <transition name="fade">
+      <div class="modal-wrapper" role="dialog" @click.stop>
         <div class="modal-container">
           <div class="modal-header">
             <h3 class="date">{{data.dt|formatDate}}</h3>
@@ -13,6 +14,18 @@
             <div class="modal-temp">
               <h3 class="avg-temp">{{avgTemp|round}}&deg;</h3>
             </div>
+            <div class="modal-icon">
+              <img
+                v-bind:src="require('@/assets/' + data.weather[0].icon + '.svg')"
+                v-bind:alt="data.weather[0].main"
+                width="50%"
+              />
+              <h3 class="modal-main">{{data.weather[0].description}}</h3>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            
             <div class="modal-data">
               <table>
                 <tr>
@@ -37,17 +50,6 @@
                 </tr>
               </table>
             </div>
-            <div class="modal-icon">
-              <img
-                v-bind:src="require('@/assets/' + data.weather[0].icon + '.svg')"
-                v-bind:alt="data.weather[0].main"
-                width="50%"
-              />
-              <h3 class="modal-main">{{data.weather[0].description}}</h3>
-            </div>
-          </div>
-
-          <div class="modal-footer">
             <table class="footer-items">
               <tr>
                 <td>morning</td>
@@ -73,8 +75,9 @@
           </div>
         </div>
       </div>
-    </div>
+      
   </transition>
+    </div>
 </template>
 <script>
 export default {
@@ -154,6 +157,9 @@ export default {
 
 .modal-wrapper {
   background: rgba(112, 172, 182, 0.8);
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
   position: relative;
   border-radius: 25px;
   width: 35%;
@@ -165,14 +171,18 @@ export default {
   transition: opacity 0.3s ease;
 }
 
-.date {
-  color: #bfdadf;
+.date, .modal-city {
+  color: white;
 }
 
 tr,
 td {
   color: rgb(255, 255, 255);
   text-align: left;
+}
+
+td {
+  padding-left: 20px;
 }
 
 .modal-header,
@@ -211,7 +221,7 @@ h3.modal-main {
 .modal-temp,
 .modal-data,
 .modal-icon {
-  width: 33.33%;
+  width: 50%;
   margin: auto;
 }
 
@@ -242,12 +252,8 @@ table {
  * these styles.
  */
 
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
+.fade-enter-active, .fade-leave-active {
+  opacity: 0.5s;
 }
 
 .modal-enter .modal-container,
@@ -259,6 +265,7 @@ table {
 @media only screen and (max-width: 768px) {
  .modal-header{
    display: inline-flex;
+   width: 100%;
  }
  
 .modal-default-button {
@@ -268,10 +275,25 @@ table {
 }
 
 @media only screen and (max-width: 425px) {
+  .modal-wrapper {
+    margin-left: 10px;
+    padding: 0;
+    padding-bottom: 10px;
+     zoom: 0.95;
+  }
   
 .modal-backdrop {
   justify-content:left;
 }
+}
+
+@media only screen and (max-width: 320px) {
+  .modal-wrapper {
+    margin-left: 8px;
+    padding: 0;
+    padding-bottom: 10px;
+     zoom: 0.85;
+  }
 
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <load-spinner v-if="loading" color="ffffff" size=50></load-spinner>
+    <load-spinner v-if="loading" color="fff" size="50"></load-spinner>
     <v-parallax v-if="photo" :src="photo.src.large2x" :alt="this.currentCity">
       <div class="overlay">
         <v-container>
@@ -24,9 +24,11 @@
             <vueper-slides
               class="no-shadow"
               :visible-slides="3"
+              slide-multiple
               :slide-ratio="1 / 4"
-              :dragging-distance="70"
-              arrows-on-edges
+              :dragging-distance="200"
+              :breakpoints="breakpoints"
+              :arrows="true"
             >
               <vueper-slide v-for="(forecast,i) in weatherData.daily" :key="i">
                 <template v-slot:content>
@@ -41,9 +43,6 @@
                         width="50%"
                       />
                     </div>
-                    <!-- <v-expand-transition>
-                        <modal v-if="hover" :data="modalData" :avgTemp="avgTemp"></modal>
-                    </v-expand-transition>-->
                     <h4 class="slide-main">{{forecast.weather[0].main}}</h4>
                   </div>
                   <!-- </v-hover> -->
@@ -52,11 +51,11 @@
             </vueper-slides>
             <!-- use the modal component, pass in the prop -->
             <modal
-              v-if="showModal"
-              @close="showModal = false"
-              :data="modalData"
-              :avgTemp="avgTemp"
-              :city="currentCity"
+            v-if="showModal"
+            @close="showModal = false"
+            :data="modalData"
+            :avgTemp="avgTemp"
+            :city="currentCity"
             ></modal>
           </div>
           <div id="data-footer">
@@ -102,6 +101,12 @@ export default {
     "load-spinner": ClipLoader,
   },
   data: () => ({
+    breakpoints: {
+    425: {
+      slideRatio: 1 / 3,
+      arrows: true
+    }
+  },
     openweathermap: "//api.openweathermap.org/data/2.5/",
     pexels: "https://api.pexels.com/v1/search?query=",
     photo: null,
@@ -255,6 +260,11 @@ export default {
   height: 100%;
 }
 
+.load-spinner {
+  color: white;
+  margin-top: 10px;
+}
+
 .container {
   margin-top: 30px;
 }
@@ -275,7 +285,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(152, 187, 201, 0.8);
+  background-color: rgba(140, 187, 201, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -348,15 +358,19 @@ h5>p {
 }
 
 .vueperslide {
+  align-content: center;
   padding: 8px;
 }
 
 .vueperslide:hover {
+  border-radius: 25px;
   background-color: rgb(214, 214, 214, 0.2);
   cursor: pointer;
 }
 
+
 .slide-main {
+  margin: auto;
   font-size: 2.2rem;
   position: absolute;
   text-align: center;
@@ -391,9 +405,13 @@ button{
 }
 
 .new-photo {
+  border-radius: 50px;
   margin: 0;
   margin-right: 3px;
   width: 80%;
+}
+.new-photo:hover {
+  color: rgba(240, 240, 240, 0.8);
 }
 
 #footer>a{
@@ -403,11 +421,9 @@ button{
 
 
 @media only screen and (max-width: 965px) {
-  .vueperslides__arrows--outside .vueperslides__arrow--prev {
-    left: 0 !important;
-  }
-  .vueperslides__arrows--outside .vueperslides__arrow--next {
-    right: 0 !important;
+  .vueperslides__arrow {
+    left: 0em !important;
+    right: 0em !important;
   }
 }
 
@@ -451,6 +467,8 @@ button{
   font-size: 23px;
 }
   .slide-date {
+  text-decoration: underline;
+  text-decoration-style: dotted;
     font-size: 23px;
   }
 }
