@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <load-spinner v-if="loading" color="fff" size="50"></load-spinner>
+    <load-spinner v-if="loading" color="fff" size:50></load-spinner>
     <v-parallax v-if="photo" :src="photo.src.large2x" :alt="this.currentCity">
       <div class="overlay">
         <v-container>
@@ -192,7 +192,6 @@ export default {
       } else {
         axios
           .get(this.openweathermap + "onecall", {
-            //note: onecall is only able to accept lat/lon
             params: {
               lat: this.$route.params.cityLat,
               lon: this.$route.params.cityLon,
@@ -251,6 +250,15 @@ export default {
       var randomIndex = Math.floor(Math.random() * this.photos.length);
       this.photo = this.photos[randomIndex];
     },
+    objHeight: function objHeight() {
+      if(this.$refs.img.naturalHeight){
+        return this.$refs.img.naturalHeight
+      }
+      if(this.$refs.img.height){
+        return this.$refs.img.height
+      }
+      return 0;
+    }
   },
 };
 </script>

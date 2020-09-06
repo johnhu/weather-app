@@ -4,29 +4,27 @@
       <div class="overlay">
         <div id="body">
           <div class="content">
-            <form>
               <div id="input"><input
               @click="query=''"
               v-on:keyup.enter="preFetchPhoto();"
               v-model="query"
               id="text-box"
               
-              />
+              /> <button id="random" @click="picker(); getCities(); preFetchPhoto();"><img
+          src="@/assets/die-white.svg"
+          title="search"
+          width="20px"
+          height="20px"
+          /></button>
                 <button id="search" @click="preFetchPhoto();"> <img
           src="@/assets/search-white.svg"
           title="search"
           width="20px"
           height="20px"
           /></button>
-                <button id="random" @click="picker(); getCities(); preFetchPhoto();"><img
-          src="@/assets/die-white.svg"
-          title="search"
-          width="20px"
-          height="20px"
-          /></button></div>
-            </form>
+               </div>
             <div id="search-results">
-              <load-spinner v-if="loading" color="ffffff" size=50></load-spinner>
+              <load-spinner v-if="loading" color="ffffff" size:50></load-spinner>
               <div class="cities" v-if="results && results.list.length > 0">
                 <div class="city-result" v-for="(city,index) in results.list" :key="index">
                   <router-link
@@ -453,16 +451,11 @@ input {
   }
 
   #text-box {
-    width:72%;
+    width:70%;
   }
-  
-  #search, #random {
-    width: 14%;
+  #search {
+    width: 18%;
   }
-  #random {
-    padding-right: 10px;
-  }
-
 }
 </style>
 

@@ -8,7 +8,7 @@
     <router-view />
     
 <div class="units-toggle">
-<v-btn-toggle v-model="toggle_exclusive" mandatory>
+<v-btn-toggle mandatory>
 <v-btn @click="isCelsius=true">
 &deg;C
 </v-btn>
@@ -23,11 +23,9 @@
 import Vue from "vue";
 import VTooltip from "v-tooltip";
 import modal from "@/components/modal.vue";
-import axios from "axios";
 
 Vue.use(VTooltip);
 Vue.use(modal);
-Vue.use(axios);
 
 export default {
   name: "app",
